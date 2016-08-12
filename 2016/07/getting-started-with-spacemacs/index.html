@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Getting Started with Spacemacs &middot; André Almar</title>
+
+  
+  <link rel="stylesheet" href="http://andrealmar.com/css/poole.css">
+  <link rel="stylesheet" href="http://andrealmar.com/css/hyde.css">
+  <link rel="stylesheet" href="http://andrealmar.com/css/poole-overrides.css">
+  <link rel="stylesheet" href="http://andrealmar.com/css/hyde-overrides.css">
+  <link rel="stylesheet" href="http://andrealmar.com/css/hyde-x.css">
+  <link rel="stylesheet" href="http://andrealmar.com/css/highlight/sunburst.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://andrealmar.com/touch-icon-144-precomposed.png">
+  <link href="http://andrealmar.com/favicon.png" rel="icon">
+
+  
+  
+  
+  
+
+  <meta name="description" content="I am a software developer trying to change the world one line-of-code at a time.">
+  <meta name="keywords" content="andre,almar,andre almar,developer,engineer,web application,python,golang,javascript,html,docker,devops,entrepreneurship, web development">
+  
+</head>
+<body class="theme-base-4b">
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      
+      <h1>André Almar</h1>
+      <p class="lead">Trying to change the world one line-of-code at a time.</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item"><a href="http://andrealmar.com/">Home</a></li>
+      <li class="sidebar-nav-item"><a href="http://andrealmar.com/about">About</a></li>
+      <li class="sidebar-nav-item"><a href="http://andrealmar.com/talks">Talks</a></li>
+      <li class="sidebar-nav-item"><a href="http://andrealmar.com/projects">Projects</a></li>
+      <li class="sidebar-nav-item"><a href="mailto:andre@pydevv.com?Subject=Contact%20via%20website">Contact</a></li>
+      <li class="sidebar-nav-item"><a href="http://andrealmar.com/download/andre-araujo-cv.pdf">Resume</a></li>
+
+
+      
+    </ul>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+      <a href="https://github.com/andrealmar"><i class="fa fa-github-square fa-3x"></i></a>
+      
+      
+      
+      <a href="https://plus.google.com/&#43;AndreAraujo04"><i class="fa fa-google-plus-square fa-3x"></i></a>
+      <a href="https://facebook.com/andrealmar"><i class="fa fa-facebook-square fa-3x"></i></a>
+      <a href="https://twitter.com/andre_almar"><i class="fa fa-twitter-square fa-3x"></i></a>
+      
+      
+      </li>
+    </ul>
+
+    
+
+    <p>&copy; 2016 Andre Almar<br/>
+    All Rights Reserved <br />Creative Commons License<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Contract Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a></p>
+  </div>
+</div>
+
+
+<div class="content container">
+  <div class="post">
+    <h1>Getting Started with Spacemacs</h1>
+    <span class="post-date">Jul 7, 2016 &middot; 1 minute read &middot; <a href="http://andrealmar.com/2016/07/getting-started-with-spacemacs/#disqus_thread">Comments</a>
+    
+    <br/>
+    <a class="label" href="http://andrealmar.com/categories/emacs">emacs</a><a class="label" href="http://andrealmar.com/categories/spacemacs">spacemacs</a>
+    </span>
+    
+
+<h2 id="a-little-bit-of-history">A little bit of history</h2>
+
+<p>The short answer to this is that if you care about performance and efficiency then you should be using WhiteNoise behind a CDN like CloudFront. If you’re doing that then, because of the caching headers WhiteNoise sends, the vast majority of static requests will be served directly by the CDN without touching your application, so it really doesn’t make much difference how efficient WhiteNoise is.<br />
+<br />
+That said, WhiteNoise is pretty efficient. Because it only has to serve a fixed set of files it does all the work of finding files and determining the correct headers upfront on initialization. Requests can then be served with little more than a dictionary lookup to find the appropriate response. Also, when used with gunicorn (and most other WSGI servers) the actual business of pushing the file down the network interface is handled by the kernel’s very efficient <code>sendfile</code> syscall, not by Python.
+<br /></p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Here are the steps I used to install Spacemacs in your computer:</p>
+
+<pre><code class="language-shell">brew tap d12frosted/emacs-plus
+brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
+brew linkapps
+</code></pre>
+
+<p>Update to the latest version of emacs:</p>
+
+<pre><code class="language-shell">brew install emacs --with-cocoa
+brew linkapps emacs
+</code></pre>
+
+  </div>
+  <div id="disqus_thread"></div>
+</div>
+
+
+<script type="text/javascript">
+var disqus_shortname = "andrealmar";
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+
+<script type="text/javascript">
+    var disqus_shortname = "andrealmar";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script src="http://andrealmar.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-58773330-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

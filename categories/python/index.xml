@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on This Coding Life</title>
+    <link>http://andrealmar.com/categories/python/</link>
+    <description>Recent content in Python on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Mon, 04 Apr 2016 20:50:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Containerizing your applications with Docker - Part 2</title>
+      <link>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/</link>
+      <pubDate>Mon, 04 Apr 2016 20:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/</guid>
+      <description>
+
+&lt;p&gt;Ready for Part 2? If you don&amp;rsquo;t read, please read &lt;a href=&#34;http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/&#34;&gt;Part 1&lt;/a&gt; which will give you a brief introduction in some concepts that you will need to grasp before get your hands dirty with Docker. Ok? So&amp;hellip;.Let&amp;rsquo;s get started.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;
+&lt;img src=&#34;http://andrealmar.com/images/docker.jpg&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;docker-image&#34;&gt;Docker Image&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Docker images are the basis of containers. It&amp;rsquo;s an encapsulated environment ready to be replicated wherever you want. Each time you’ve used &lt;em&gt;docker run&lt;/em&gt; you told it which image you wanted.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In the previous section of our tutorial you used a Docker image that already exists, the &lt;em&gt;library/hello-world&lt;/em&gt; image.&lt;/p&gt;
+
+&lt;p&gt;Remember that we did:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then we saw this output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Unable to find image &#39;hello-world:latest&#39; locally
+latest: Pulling from library/hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Docker stores downloaded images on the Docker host. If an image isn’t already present on the host then it’ll be downloaded from a registry: by default the &lt;a href=&#34;https://registry.hub.docker.com/&#34;&gt;Docker Hub Registry&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you want to see a list of images that you have locally you can do it by using the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker images
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my case it shows those three images that I have locally:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+kartoza/postgis     latest              c209e16e71f7        5 days ago          496.1 MB
+ubuntu              latest              97434d46f197        2 weeks ago         188 MB
+hello-world         latest              690ed74de00f        5 months ago        960 B
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Docker also allows us to create our own images using a definition file called Dockerfile. With Dockerfile we can specify instructions and commands that tell Docker how to build our image. It&amp;rsquo;s literally a recipe.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create our image and in order to do that first we have to create a Dockerfile. Create a directory and inside that directory create a Dockerfile.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir directory_name
+cd directory_name
+touch Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Pause to teach you some Docker commands&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;docker-basic-commands&#34;&gt;Docker basic commands&lt;/h2&gt;
+
+&lt;p&gt;Here is a list of a very basic Docker commands that you are going to use often:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run &amp;lt;image&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This command will take any image, it will create a new container from the image and start that container.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker start &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Start an existing container that is not running.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker stop &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When a container is running you can use this command to stop the execution of that container.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker ps [-a include stopped containers]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Gives you a list of all your running containers. If you use the flag &lt;em&gt;-a&lt;/em&gt; it will show you all the stopped containers as well.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker rm &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove / Delete a container&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Let&amp;rsquo;s continue creating our image&amp;hellip; We are creating a PostgreSQL 9.3 image in this tutorial.&lt;/p&gt;
+
+&lt;p&gt;Our Dockerfile will have to be like this:&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/andrealmar/bce56f7d8450990333703aa5c4ac8d61.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;The Dockerfile is self-explanatory, it&amp;rsquo;s well commented and if you have any questions please leave a comment below.&lt;/p&gt;
+
+&lt;p&gt;Now we have to &lt;strong&gt;build&lt;/strong&gt; our image. Let&amp;rsquo;s do this by typing the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker build -t andrealmar/postgresql:9.3 .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You’ve specified our docker build command and used the -t flag to identify our new image as andrealmar/postgresql:9.3 and also specified the location of our Dockerfile using the . to indicate a Dockerfile in the current directory.&lt;/p&gt;
+
+&lt;p&gt;Services are built once and then tagged as postgresql:9.3. If you change a service&amp;rsquo;s Dockerfile or the contents of its build directory, run &lt;em&gt;docker-compose build&lt;/em&gt; to rebuild it.&lt;/p&gt;
+
+&lt;p&gt;The Output will be something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Sending build context to Docker daemon 19.97 kB
+Step 1 : FROM ubuntu
+ ---&amp;gt; 97434d46f197
+Step 2 : MAINTAINER Andre Almar &amp;lt;andre@pydevv.com&amp;gt;
+ ---&amp;gt; Using cache
+ ---&amp;gt; 70763ebda914
+Step 3 : RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+ ---&amp;gt; Using cache
+ ---&amp;gt; 9baa8c54442c
+Step 4 : RUN echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list
+ ---&amp;gt; Using cache
+ ---&amp;gt; e86e2f540ecb
+Step 5 : RUN apt-get update &amp;amp;&amp;amp; apt-get install -y python-software-properties software-properties-common postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
+ ---&amp;gt; Using cache
+ ---&amp;gt; 69d82fd86acd
+Step 6 : USER postgres
+ ---&amp;gt; Using cache
+ ---&amp;gt; cd2593bf4bbe
+Step 7 : RUN /etc/init.d/postgresql start &amp;amp;&amp;amp;    psql --command &amp;quot;CREATE USER docker WITH SUPERUSER PASSWORD &#39;docker&#39;;&amp;quot; &amp;amp;&amp;amp;        createdb -O docker docker
+ ---&amp;gt; Using cache
+ ---&amp;gt; 9dbf59e35474
+Step 8 : RUN echo &amp;quot;host all  all    0.0.0.0/0  md5&amp;quot; &amp;gt;&amp;gt; /etc/postgresql/9.3/main/pg_hba.conf
+ ---&amp;gt; Using cache
+ ---&amp;gt; 327f7dc70201
+Step 9 : RUN echo &amp;quot;listen_addresses=&#39;*&#39;&amp;quot; &amp;gt;&amp;gt; /etc/postgresql/9.3/main/postgresql.conf
+ ---&amp;gt; Using cache
+ ---&amp;gt; 1b146766f710
+Step 10 : EXPOSE 5432
+ ---&amp;gt; Using cache
+ ---&amp;gt; e950c34ec810
+Step 11 : VOLUME /etc/postgresql /var/log/postgresql /var/lib/postgresql
+ ---&amp;gt; Using cache
+ ---&amp;gt; 5d15ea251ef9
+Step 12 : CMD /usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf
+ ---&amp;gt; Running in dc23742bbefd
+ ---&amp;gt; 5e614bcb798e
+Removing intermediate container dc23742bbefd
+Successfully built 5e614bcb798e
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our image was successfully built. Yay!!!&lt;/p&gt;
+
+&lt;p&gt;Now we have to run a container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -P --name pg_test andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note: The &amp;ndash;rm removes the container and its image when the container exits successfully.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We&amp;rsquo;ve built our image locally but we can push the image to the Docker Hub repository.&lt;/p&gt;
+
+&lt;p&gt;Go to &lt;a href=&#34;https://hub.docker.com/&#34;&gt;https://hub.docker.com/&lt;/a&gt; and register an account. Now in your terminal type:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker login
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert your credentials and you are ready to push your image to Docker Hub.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker push andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output will be something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The push refers to a repository [docker.io/andrealmar/postgresql]
+25061686dd38: Pushed 
+f3348af5962c: Pushed 
+dad10331254a: Pushed 
+601598d231fc: Pushed 
+d0448568fb1f: Pushed 
+7fedc9eff662: Pushed 
+5f70bf18a086: Mounted from kartoza/postgis 
+1b82ce694c3b: Mounted from library/ubuntu 
+db6b2d84f3c6: Mounted from library/ubuntu 
+05b940eef08d: Mounted from library/ubuntu 
+9.3: digest: sha256:ba69f101c2b8b4536bab692b83b528bbb8c9bd7931d5740840c7417833b52300 size: 10429
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you go to your Docker Hub account you will see that your image is published.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_hub.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, now that we&amp;rsquo;ve built the PostgreSQL 9.3 image we have to run.&lt;/p&gt;
+
+&lt;p&gt;Please &lt;strong&gt;PAY ATTENTION&lt;/strong&gt; here because it will free you from headaches. I&amp;rsquo;ve lost a bunch of time trying to figure out this but with the help of &lt;em&gt;Sebastiaan van Stijn&lt;/em&gt; - &lt;a href=&#34;https://github.com/thaJeztah&#34;&gt;https://github.com/thaJeztah&lt;/a&gt; I was able to do this right.&lt;/p&gt;
+
+&lt;p&gt;The command below will run the container. When running on &lt;strong&gt;OS X&lt;/strong&gt;, the docker daemon (and containers) are running in a Virtual Machine.&lt;/p&gt;
+
+&lt;p&gt;If you want to access the PostgreSQL database from your OS X machine, you need to &lt;em&gt;&amp;ldquo;publish&amp;rdquo;&lt;/em&gt; the container&amp;rsquo;s port, to make them publicly accessible.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run -d -p 2345:5432 andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Publishes port 5432 of the container on port 2345 on the host (the virtual machine in my case).&lt;/p&gt;
+
+&lt;p&gt;To access, use the IP-address of the virtual machine, which you can obtain via docker-machine:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-machine ip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;192.168.99.100
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You container is running so you are good to connect:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -h 192.168.99.100 -p 2345 -U docker docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;psql (9.5.1, server 9.3.12)
+SSL connection (protocol: TLSv1.2, cipher: DHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+Type &amp;quot;help&amp;quot; for help.
+
+docker=# 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See you on Part 3.&lt;/p&gt;
+
+&lt;p&gt;Bye,&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/v1.5/compose/cli/&#34;&gt;https://docs.docker.com/v1.5/compose/cli/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://docs.docker.com/engine/examples/postgresql_service/&#34;&gt;https://docs.docker.com/engine/examples/postgresql_service/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.andreagrandi.it/2015/02/21/how-to-create-a-docker-image-for-postgresql-and-persist-data/&#34;&gt;https://www.andreagrandi.it/2015/02/21/how-to-create-a-docker-image-for-postgresql-and-persist-data/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.mundodocker.com.br/&#34;&gt;http://www.mundodocker.com.br/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/wsargent/docker-cheat-sheet&#34;&gt;https://github.com/wsargent/docker-cheat-sheet&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Containerizing your applications with Docker - Part 1</title>
+      <link>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/</link>
+      <pubDate>Mon, 04 Apr 2016 15:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/</guid>
+      <description>
+
+&lt;p&gt;Docker. First time I&amp;rsquo;ve heard about Docker and I did some research on this topic, I couldn&amp;rsquo;t understand what Docker was. I&amp;rsquo;m used to Virtual Machines, Vagrant and so on. I thought they (Docker and Vagrant) were the same thing but I was completely wrong. Let&amp;rsquo;s make first a brief introduction to some concepts to clarify what Docker is and how can we use it.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-a-virtual-machine-vm&#34;&gt;What is a Virtual Machine (VM)?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In computing, a virtual machine (VM) is an emulation of a particular computer system. Virtual machines operate based on the computer architecture and functions of a real or hypothetical computer, and their implementations may involve specialized hardware, software, or a combination of both.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A virtual machine (VM) is a software implementation of a machine (for example, a computer) that executes programs like a physical machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/virtual_machine.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Each virtual machine includes the application, the necessary binaries and libraries and an entire guest operating system - all of which &lt;strong&gt;may be tens of GBs in size&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-vagrant&#34;&gt;What is Vagrant?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Vagrant is a tool for building complete development environments. With an easy-to-use workflow and focus on automation, Vagrant lowers development environment setup time, increases development/production parity, and makes the &amp;ldquo;works on my machine&amp;rdquo; excuse a relic of the past.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is very interesting because it facilitates when a new developer is hired. All your new hire will need to do is to execute a simple command and the environment is set up.&lt;/p&gt;
+
+&lt;p&gt;You run a provisioning script against your virtual machine exactly as you would against a production or staging machine. In the provisioning script you tell Vagrant to install the correct version of Python, Django, set up the user permissions, configure anything that needs to be configured and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;In other words you can automate the creation of your environments. But, you are &lt;strong&gt;not&lt;/strong&gt; free from Virtual Machines. You can use different VM providers to work along with Vagrant but you &lt;strong&gt;have&lt;/strong&gt; to use one otherwise Vagrant won&amp;rsquo;t work. The most common is &lt;a href=&#34;http://www.virtualbox.org&#34;&gt;VirtualBox&lt;/a&gt;. Also, there are a lot of premade “boxes” ready to use. You can search them using:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.hashicorp.com/boxes/search&#34;&gt;https://atlas.hashicorp.com/boxes/search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.vagrantbox.es/&#34;&gt;http://www.vagrantbox.es/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/vagrant.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Vagrant in a nutshell:&lt;/strong&gt; Different boxes and we put our code in those different boxes.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-a-container&#34;&gt;What is a Container?&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/container.jpg&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Simple. Is something that looks like the photo above. =P Naahh&amp;hellip;just kidding.&lt;/p&gt;
+
+&lt;p&gt;Containers have similar resource isolation and allocation benefits as virtual machines but a different architectural approach allows them to be much more portable and efficient.&lt;/p&gt;
+
+&lt;p&gt;This whole idea is based on LXC (Linux Containers). LXC (Linux Containers) is an operating-system-level virtualization method for running multiple isolated Linux systems (containers) on a control host using a single Linux kernel.&lt;/p&gt;
+
+&lt;p&gt;With container-based virtualization, there isn&amp;rsquo;t the overhead associated with having each guest run a completely installed operating system. This approach can also improve performance because there is just one operating system taking care of hardware calls. A disadvantage of container-based virtualization, however, is that each guest must use the same operating system the host uses.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/lxc.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Containers include the application and all of its dependencies, but &lt;em&gt;share the kernel&lt;/em&gt; with other containers. They run as an isolated process in userspace on the host operating system. They’re also &lt;em&gt;not tied&lt;/em&gt; to any specific infrastructure – for example, Docker containers run on &lt;em&gt;any computer&lt;/em&gt;, on &lt;em&gt;any infrastructure&lt;/em&gt; and in any cloud.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-docker&#34;&gt;What is Docker?&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – anything you can install on a server. This guarantees that it will always run the same, regardless of the environment it is running in.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In Docker we can build our environment and run anywhere. If a machine has Docker on it the container is going to run and is going to work.&lt;/p&gt;
+
+&lt;p&gt;They act as Virtual Machines but they are really self-contained processes. You are really packaging a whole application or an entire environment inside a container.&lt;/p&gt;
+
+&lt;p&gt;You build your image once, push it to Docker Hub or Quay.io and now you can run your image anywhere.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/containers_diagram.png&#34;&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;installing-docker&#34;&gt;Installing Docker&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;m assuming you&amp;rsquo;re using Mac OS, for other OS follow the instructions on Docker homepage (&lt;a href=&#34;http://www.docker.com&#34;&gt;http://www.docker.com&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Go to the homepage (&lt;a href=&#34;http://www.docker.com&#34;&gt;http://www.docker.com&lt;/a&gt;), click on the &lt;em&gt;Get Started with Docker&lt;/em&gt; link. This will redirect you to &lt;a href=&#34;https://docs.docker.com/mac/&#34;&gt;https://docs.docker.com/mac/&lt;/a&gt; and then click on &lt;em&gt;Go to the next page to install&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The next page will tell you that because Docker Engine daemon uses Linux-specific kernel features, you can&amp;rsquo;t run Docker Engine natively in OS X. This is changing: &lt;a href=&#34;https://blog.docker.com/2016/03/docker-for-mac-windows-beta/&#34;&gt;https://blog.docker.com/2016/03/docker-for-mac-windows-beta/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;But for this tutorial we are going to use the &amp;ldquo;old&amp;rdquo; way!? Make sure your Mac is running OS X 10.8 “Mountain Lion” or newer to run Docker software. Install Docker Toolbox &lt;a href=&#34;https://www.docker.com/products/docker-toolbox&#34;&gt;https://www.docker.com/products/docker-toolbox&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to your launcher and click the Docker Quickstart Terminal:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_quickstart_launcher.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;A Terminal window will show up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_terminal.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;We are ready to test our Docker installation. To do that just type in your terminal the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you see this output below, you succeeded installing Docker:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Unable to find image &#39;hello-world:latest&#39; locally
+latest: Pulling from library/hello-world
+
+03f4658f8b78: Pull complete 
+a3ed95caeb02: Pull complete 
+Digest: sha256:8be990ef2aeb16dbcb9271ddfe2610fa6658d13f6dfb8bc72074cc1ca36966a7
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the &amp;quot;hello-world&amp;quot; image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker Hub account:
+ https://hub.docker.com
+
+For more examples and ideas, visit:
+ https://docs.docker.com/userguide/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See you on Part 2.&lt;/p&gt;
+
+&lt;p&gt;Bye,&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_machine&#34;&gt;https://en.wikipedia.org/wiki/Virtual_machine&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.docker.com/what-docker&#34;&gt;https://www.docker.com/what-docker&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/LXC&#34;&gt;https://en.wikipedia.org/wiki/LXC&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.mundodocker.com.br/&#34;&gt;http://www.mundodocker.com.br/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Serving staticfiles in Django with WhiteNoise</title>
+      <link>http://andrealmar.com/2016/03/django-whitenoise/</link>
+      <pubDate>Thu, 03 Mar 2016 00:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/03/django-whitenoise/</guid>
+      <description>
+
+&lt;p&gt;Hi, in this post I&amp;rsquo;m going to show you how to use WhiteNoise to serve static files using Django.
+&lt;a href=&#34;http://whitenoise.evans.io/&#34;&gt;WhiteNoise&lt;/a&gt; is a library to radically simplified static file serving for Python web applications. With a couple of lines of config WhiteNoise allows your web app to serve its own static files, making it a self-contained unit that can be deployed anywhere without relying on nginx, Amazon S3 or any other external service. (Especially useful on Heroku, OpenShift and other PaaS providers.)
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;isn-t-serving-static-files-from-python-horribly-inefficient&#34;&gt;Isn’t serving static files from Python horribly inefficient?&lt;/h2&gt;
+
+&lt;p&gt;The short answer to this is that if you care about performance and efficiency then you should be using WhiteNoise behind a CDN like CloudFront. If you’re doing that then, because of the caching headers WhiteNoise sends, the vast majority of static requests will be served directly by the CDN without touching your application, so it really doesn’t make much difference how efficient WhiteNoise is.&lt;br /&gt;
+&lt;br /&gt;
+That said, WhiteNoise is pretty efficient. Because it only has to serve a fixed set of files it does all the work of finding files and determining the correct headers upfront on initialization. Requests can then be served with little more than a dictionary lookup to find the appropriate response. Also, when used with gunicorn (and most other WSGI servers) the actual business of pushing the file down the network interface is handled by the kernel’s very efficient &lt;code&gt;sendfile&lt;/code&gt; syscall, not by Python.
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;shouldn-t-i-be-pushing-my-static-files-to-s3-using-something-like-django-storages&#34;&gt;Shouldn’t I be pushing my static files to S3 using something like Django-Storages?&lt;/h2&gt;
+
+&lt;p&gt;No, you shouldn’t. The main problem with this approach is that Amazon S3 cannot currently selectively serve gzipped content to your users. Gzipping can make dramatic reductions in the bandwidth required for your CSS and JavaScript. But while all browsers in use today can decode gzipped content, your users may be behind crappy corporate proxies or anti-virus scanners which don’t handle gzipped content properly. Amazon S3 forces you to choose whether to serve gzipped content to no-one (wasting bandwidth) or everyone (running the risk of your site breaking for certain users).
+&lt;br /&gt;&lt;br /&gt;
+The correct behaviour is to examine the &lt;code&gt;Accept-Encoding&lt;/code&gt; header of the request to see if gzip is supported, and to return an appropriate &lt;code&gt;Vary&lt;/code&gt; header so that intermediate caches know to do the same thing. This is exactly what WhiteNoise does.
+&lt;br /&gt;&lt;br /&gt;
+The second problem with a push-based approach to handling static files is that it adds complexity and fragility to your deployment process: extra libraries specific to your storage backend, extra configuration and authentication keys, and extra tasks that must be run at specific points in the deployment in order for everything to work. With the CDN-as-caching-proxy approach that WhiteNoise takes there are just two bits of configuration: your application needs the URL of the CDN, and the CDN needs the URL of your application. Everything else is just standard HTTP semantics. This makes your deployments simpler, your life easier, and you happier. Enough talking, let&amp;rsquo;s go to action.
+&lt;br /&gt;&lt;br /&gt;
+Install the WhiteNoise package:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pip install whitenoise
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Open your &lt;code&gt;settings.py&lt;/code&gt; and add the following:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;STATIC_ROOT = os.path.join(BASE_DIR, &#39;staticfiles&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run &lt;code&gt;python manage.py collectstatic&lt;/code&gt; to put all your static files into STATIC_ROOT. (If you’re running on Heroku then this is done automatically for you.)&lt;/p&gt;
+
+&lt;p&gt;Also add in your &lt;code&gt;settings.py&lt;/code&gt;:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from whitenoise import WhiteNoise
+
+# Simplified static file serving with WhiteNoise adding cachable files and gzip support
+STATICFILES_STORAGE = &#39;whitenoise.django.GzipManifestStaticFilesStorage&#39;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Open your &lt;code&gt;wsgi.py&lt;/code&gt; and install WhiteNoise into your Django application:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from whitenoise.django import DjangoWhiteNoise
+
+application = DjangoWhiteNoise(application)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note in the code above that we are wrapping our existing WSGI application in a WhiteNoise instance with &lt;code&gt;DjangoWhiteNoise(applications)&lt;/code&gt; this is how your application will now serve static assets directly from Gunicorn in production. This will be perfectly adequate for most applications, but top-tier applications may want to explore using a CDN with Django-Storages.
+I hope you guys liked it and if you have any questions or suggestions leave a comment below.&lt;br /&gt;
+&lt;br /&gt;
+See ya!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python Generators</title>
+      <link>http://andrealmar.com/2016/02/generators/</link>
+      <pubDate>Thu, 04 Feb 2016 19:20:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/02/generators/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;I&amp;rsquo;m the Generator, firing whenever you quit
+&lt;br/&gt;
+Yeah whatever it is, you go out and it&amp;rsquo;s on
+&lt;br/&gt;
+Yeah can&amp;rsquo;t you hear my motored heart
+&lt;br/&gt;
+You&amp;rsquo;re the one that started it&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&#34;http://andrealmar.com/images/Generator_FooFighters.jpg&#34;&gt;
+&lt;br /&gt;&lt;br /&gt;
+Não&amp;hellip;eu não vou escrever neste post sobre a ótima música do Foo Fighters (embora recomendo que você a escute =P). Estamos aqui para falar de uma função bastante legal na nossa linguagem de programação preferida: Os famosos &lt;strong&gt;Generators&lt;/strong&gt;.
+&lt;br /&gt;&lt;br /&gt;
+Em termo simples os &lt;strong&gt;Generators&lt;/strong&gt; são &lt;em&gt;funções que permitem a você declarar uma função que se comporta como um iterador, ou seja, que pode ser usado dentro de um loop&lt;/em&gt; &lt;strong&gt;for&lt;/strong&gt;.&lt;br /&gt;
+&lt;br /&gt;
+Simplificando mais ainda: &lt;strong&gt;Generators&lt;/strong&gt; são uma forma simples de criarmos iteradores.  Ele irá retornar um objeto (iterador) para que nós possamos iterar sobre este objeto (um valor de cada vez).&lt;br /&gt;
+&lt;br /&gt;
+É muito simples criar uma função &lt;strong&gt;Generator&lt;/strong&gt;, mas existem algumas peculiaridades. Por exemplo, nós usamos a declaração &lt;strong&gt;yield&lt;/strong&gt; ao invés de &lt;strong&gt;return&lt;/strong&gt;. Se a função contém ao menos uma declaração &lt;strong&gt;yield&lt;/strong&gt; então ela se torna uma função &lt;strong&gt;Generator&lt;/strong&gt;.
+&lt;br /&gt;&lt;br /&gt;
+Um exemplo bem simples. Abra o seu interpretador Python e digite a função abaixo:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def generator():
+    n = 1
+    print(&amp;quot;Essa  uma função Generator&amp;quot;)
+    yield n
+
+    n += 1
+    yield n
+
+    n += 1
+    yield n
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Vamos agora, executar a função no interpretador Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; # Retorna um objeto mas não executa a função imediatamente.
+&amp;gt;&amp;gt;&amp;gt; a = generator()
+
+&amp;gt;&amp;gt;&amp;gt; # Podemos iterar sobre os items usando next().
+&amp;gt;&amp;gt;&amp;gt; next(a)
+Essa  uma função Generator
+1
+&amp;gt;&amp;gt;&amp;gt; # Assim que a função executa o yield, ela é pausada e o controle da execução é transferido para quem a chamou.
+
+&amp;gt;&amp;gt;&amp;gt; # Variáveis locais e os seus estados são &amp;quot;lembradas&amp;quot; durante as sucessivas chamadas à função.
+&amp;gt;&amp;gt;&amp;gt; next(a)
+2
+&amp;gt;&amp;gt;&amp;gt; next(a)
+3
+
+&amp;gt;&amp;gt;&amp;gt; # Quando a função termina, a exceção StopIteration é levantada automaticamente.
+&amp;gt;&amp;gt;&amp;gt; next(a)
+Traceback (most recent call last):
+...
+StopIteration
+&amp;gt;&amp;gt;&amp;gt; next(a)
+Traceback (most recent call last):
+...
+StopIteration
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Interessante notar que o valor da variável &lt;em&gt;a&lt;/em&gt; no exemplo acima é lembrada durante cada chamada do método &lt;em&gt;next()&lt;/em&gt;. Nós declaramos 3 &lt;strong&gt;yields&lt;/strong&gt;, então o valor da variável &lt;em&gt;a&lt;/em&gt; será lembrado por 3 vezes. Quando tentamos chamar &lt;em&gt;next(a)&lt;/em&gt; pela 4a vez, veja o que acontece:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; # Quando a função termina, a exceção StopIteration é levantada automaticamente.
+&amp;gt;&amp;gt;&amp;gt; next(a)
+Traceback (most recent call last):
+...
+StopIteration
+&amp;gt;&amp;gt;&amp;gt; next(a)
+Traceback (most recent call last):
+...
+StopIteration
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Uma exceção &lt;em&gt;StopIteration&lt;/em&gt; é lançada, alertando que a iteração acabou. Ou seja, as variáveis locais NÃO são destruídas quando usamos o &lt;strong&gt;yield&lt;/strong&gt;. O objeto &lt;strong&gt;Generator&lt;/strong&gt; só pode ser iterado uma única vez. Se quisermos restartar o processo nós precisaremos criar um outro objeto &lt;strong&gt;Generator&lt;/strong&gt;, por exemplo &lt;em&gt;b = generator()&lt;/em&gt;.
+&lt;br /&gt;&lt;br /&gt;
+Também podemos utilizar &lt;strong&gt;Generators&lt;/strong&gt; dentro de um laço &lt;strong&gt;for&lt;/strong&gt; diretamente. Isso porque o laço &lt;strong&gt;for&lt;/strong&gt; também utiliza a função &lt;em&gt;next()&lt;/em&gt; para iterar e automaticamente encerra a iteração quando a exceção &lt;em&gt;StopIteration&lt;/em&gt; é lançada.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; for item in generator():
+...     print(item)
+...
+Essa é uma função Generator
+1
+2
+3
+&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Generators Expressions&lt;/strong&gt;
+&lt;br /&gt;&lt;br /&gt;
+As &lt;strong&gt;Generators Expressions&lt;/strong&gt; facilitam à criação de &lt;strong&gt;Generators&lt;/strong&gt;. Assim como uma função lambda cria uma função anônima, uma &lt;strong&gt;Generator Expression&lt;/strong&gt; cria uma função &lt;strong&gt;Generator&lt;/strong&gt; anônima. A sintaxe é bem parecida com as famosas &lt;em&gt;List Comprehensions&lt;/em&gt; com o pequeno detalhe de que os colchetes [ ] são subsituídos pelos parênteses ( ).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;list_comprehension = [1,2,3,4,5,6,7,8]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;generator_expression = (1,2,3,4,5,6,7,8)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; x = [1, 2, 3, 4, 5, 6, 6, 8]
+&amp;gt;&amp;gt;&amp;gt; x
+[1, 2, 3, 4, 5, 6, 6, 8]
+&amp;gt;&amp;gt;&amp;gt; generator_expression = (i for i in x)
+&amp;gt;&amp;gt;&amp;gt; generator_expression
+&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x101812af0&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; list_comprehension = [i for i in x]
+&amp;gt;&amp;gt;&amp;gt; list_comprehension
+[1, 2, 3, 4, 5, 6, 6, 8]
+&amp;gt;&amp;gt;&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note no exemplo acima que a &lt;strong&gt;List Comprehension&lt;/strong&gt; nos retorna a lista em si mas a &lt;strong&gt;Generator Expression&lt;/strong&gt; nos retorna o objeto gerado:
+&lt;code&gt;&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x101812af0&amp;gt;&lt;/code&gt;.&lt;br /&gt;
+&lt;br /&gt;
+A outra vantagem é que enquanto a &lt;em&gt;List Comprehension&lt;/em&gt; gera a lista inteira, a &lt;strong&gt;Generator Expression&lt;/strong&gt; gera um item de cada vez. Isso também é chamado de &lt;em&gt;lazy ou on demand generation of values&lt;/em&gt;. E por consequência de ser &lt;em&gt;lazy&lt;/em&gt; (preguiçosa), a &lt;strong&gt;Generator Expression&lt;/strong&gt; consome bem menos memória sendo mais eficiente do que uma &lt;em&gt;List Comprehension&lt;/em&gt;.&lt;br /&gt;
+&lt;br /&gt;
+Espero que tenham gostado dessa explicação a respeito dos &lt;strong&gt;Generators&lt;/strong&gt; e quaisquer dúvidas deixem seus comentários abaixo.&lt;br /&gt;
+&lt;br /&gt;
+{}&amp;rsquo;s&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to setup ATOM as your Python development environment</title>
+      <link>http://andrealmar.com/2016/02/setup-atom-python-development-environment/</link>
+      <pubDate>Thu, 04 Feb 2016 12:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/02/setup-atom-python-development-environment/</guid>
+      <description>&lt;p&gt;Hi,&lt;br /&gt;
+&lt;br /&gt;
+PyCharm is an awesome IDE for Python Development and I use it a lot. But sometimes it gets heavier that I want to kill myself. Then I&amp;rsquo;ve found ATOM. ATOM is a coding editor created by the GitHub team to be simple, powerful and highly customizable.&lt;br /&gt;
+&lt;br /&gt;
+There are some features that I really like in &lt;strong&gt;ATOM&lt;/strong&gt; like:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Built-in package manager&lt;/li&gt;
+&lt;li&gt;Multiple panes&lt;/li&gt;
+&lt;li&gt;File system browser&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you want to give it a try and use &lt;strong&gt;ATOM&lt;/strong&gt; as your Python development environment, follow me in this post and I&amp;rsquo;ll show you how I configure my ATOM settings to make easier for us Python developers to have a very simple and powerful development environment.
+&lt;br /&gt;&lt;br /&gt;
+I&amp;rsquo;m using a Macbook so I&amp;rsquo;m assuming you are using one too. Hit &amp;ldquo;Command + ,&amp;rdquo; and this will bring the Settings tab. If you use another OS change the &amp;ldquo;Command&amp;rdquo; key to &amp;ldquo;Ctrl&amp;rdquo; key.
+&lt;br /&gt;&lt;br /&gt;
+In &lt;em&gt;Editor Settings&lt;/em&gt;, check the &lt;strong&gt;&amp;ldquo;Back Up Before Saving&amp;rdquo;&lt;/strong&gt; box. This will avoid corrupt files in case of failure during file save process.
+&lt;br /&gt;&lt;br /&gt;
+Go below and check the &lt;strong&gt;&amp;ldquo;Show Indent Guide&amp;rdquo;&lt;/strong&gt; and &lt;strong&gt;&amp;ldquo;Show Invisibles&amp;rdquo;&lt;/strong&gt; boxes. This options will help you navigate through your code showing the indentation. This is very helpful specially when you are working with Web Development and HTML files.
+&lt;br /&gt;&lt;br /&gt;
+On the left Menu, click on &lt;em&gt;Install&lt;/em&gt; option. We are going to install the following packages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;linter-flake8&lt;/li&gt;
+&lt;li&gt;linter-pep8&lt;/li&gt;
+&lt;li&gt;autocomplete-python&lt;/li&gt;
+&lt;li&gt;django-templates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The installation is pretty straightforward, you search for the package and after you&amp;rsquo;ve found you click on &lt;em&gt;Install&lt;/em&gt;. It&amp;rsquo;s simple as that.
+&lt;br /&gt;&lt;br /&gt;
+After that your &lt;strong&gt;ATOM&lt;/strong&gt; will be ready to rock some Python code. But we are not finished yet. If you try to open a Python project using &lt;strong&gt;ATOM&lt;/strong&gt; you will notice that things are not working well.
+&lt;br /&gt;&lt;br /&gt;
+&lt;img src=&#34;http://andrealmar.com/images/atom-error.png&#34;&gt;
+&lt;br /&gt;&lt;br /&gt;
+This happens because ATOM uses &lt;strong&gt;pep8&lt;/strong&gt;, &lt;strong&gt;flake8&lt;/strong&gt; and &lt;strong&gt;jedi&lt;/strong&gt; packages in its plugins. That&amp;rsquo;s why we need to install those Python packages.
+&lt;br /&gt;&lt;br /&gt;
+You already created your Python Virtual Environment following the best practices right? If so we are going to install the following Python packages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pep8&lt;/li&gt;
+&lt;li&gt;flake8&lt;/li&gt;
+&lt;li&gt;jedi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Activate your Virtualenv:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source venv/bin/activate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my case &lt;em&gt;venv&lt;/em&gt; is the name of my Virtualenv environment.
+&lt;br /&gt;&lt;br /&gt;
+More on Virtualenv&amp;rsquo;s here: &lt;a href=&#34;http://docs.python-guide.org/en/latest/dev/virtualenvs/&#34;&gt;http://docs.python-guide.org/en/latest/dev/virtualenvs/&lt;/a&gt;
+&lt;br /&gt;&lt;br /&gt;
+Now proceed with the installation of the Python packages:
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install pep8 flake8 jedi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+And we&amp;rsquo;re done. Very simple and you will have your &lt;strong&gt;ATOM&lt;/strong&gt; editor ready to use as your Python Development environment.&lt;br /&gt;
+&lt;br /&gt;&lt;br /&gt;
+&lt;img src=&#34;http://andrealmar.com/images/atom-python-dev-env-working.png&#34;&gt;
+&lt;br /&gt;&lt;br /&gt;
+See ya !&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Restoring Siebel 6 attachments - Python script</title>
+      <link>http://andrealmar.com/2015/11/python-script-restore-siebel-6-attachments/</link>
+      <pubDate>Thu, 19 Nov 2015 19:00:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2015/11/python-script-restore-siebel-6-attachments/</guid>
+      <description>&lt;p&gt;Hi all, here is my solution to make the Siebel 6.3 attachments restore easier. Following the rules of automating boring stuff with Python, I did the script that I&amp;rsquo;m sharing with you guys. Enjoy!&lt;/p&gt;
+
+&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/df7d96a008923f60f96a.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;What the script does? You pass the ROW_ID and the script takes care of the rest. It will look at the database, find the FILE_REV_NUMBER, look at the purge folder and restore the attachment based on the ROW_ID that you entered.&lt;/p&gt;
+
+&lt;p&gt;Any questions? Please leave a comment below.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating a Python script to extract results to CSV from an Oracle Database</title>
+      <link>http://andrealmar.com/2015/06/creating-a-python-script-to-extract-results-to-csv-from-an-oracle-database/</link>
+      <pubDate>Wed, 10 Jun 2015 16:20:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2015/06/creating-a-python-script-to-extract-results-to-csv-from-an-oracle-database/</guid>
+      <description>&lt;p&gt;Maybe one day you guys will need to extract results from a Database and export to CSV. And the best way to do this is using a simple script using Python, a simple and elegant language. In my case, I needed simple stuff. Just extract the results from an Oracle Database in a CSV format. The output would be a report for the Business areas. Here are the steps I did in order to achieve the expected result.
+First of all you need to install latest Python version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+sudo yum install python
+sudo yum install python-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you need to to add the line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Defaults env_keep += &amp;quot;ORACLE_HOME&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;in your &lt;em&gt;visudo&lt;/em&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo visudo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and below the section&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Adding HOME to env_keep may enable a user to run unrestricted commands via sudo.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;add the line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Defaults env_keep += &amp;quot;ORACLE_HOME&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you need to install Python &lt;em&gt;pip&lt;/em&gt;.
+Make sure that you have the _ORACLE&lt;em&gt;HOME&lt;/em&gt; variable set. Don&amp;rsquo;t forget that.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo yum install python-pip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and we can now install the _Oracle&lt;em&gt;CX&lt;/em&gt; library&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo pip install cx_Oracle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All set. Below is the code as I used to start developing the script. It connects to a DEMO DB (which comes with Oracle 12c).
+You can use it as a starting point for your needs.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import os
+import cx_Oracle
+import csv
+import time
+
+#SQL command to extract the report WHATEVER.csv
+SQL=&#39;&#39;&#39; select * from help where topic = &#39;ACCEPT&#39; &#39;&#39;&#39;
+
+#timestamp
+timestr = time.strftime(&amp;quot;%d-%m-%Y_%H:%M:%S&amp;quot;)
+
+filename=&#39;/interfaces/custom_sql/Extracao/utl_file_dir/WHATEVER&#39;+timestr+&#39;.csv&#39;
+FILE=open(filename,&amp;quot;w&amp;quot;);
+output=csv.writer(FILE, dialect=&#39;excel&#39;)
+
+#setting system variables
+#os.putenv(&#39;ORACLE_HOME&#39;, &#39;/u01/app/oracle/product/12.1.0/dbhome_1&#39;)
+#os.putenv(&#39;LD_LIBRARY_PATH&#39;, &#39;/u01/app/oracle/product/12.1.0/dbhome_1/lib&#39;)
+
+#connection with Oracle DB
+print &amp;quot;Realizando conexao com o Banco de Dados...&amp;quot;
+connection = cx_Oracle.connect(&#39;system/oracle@127.0.0.1/orcl&#39;)
+
+cursor = connection.cursor()
+cursor.execute(SQL)
+for row in cursor:
+	output.writerow(row)
+cursor.close()
+connection.close()
+FILE.close()
+
+print &amp;quot;END of extraction&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can check the script on my GitHub also: &lt;a href=&#34;https://github.com/andrealmar/csv_report_script/blob/master/csv_report.py&#34;&gt;python_csv_report&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;See you next time!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

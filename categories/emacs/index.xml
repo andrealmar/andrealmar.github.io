@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Emacs on This Coding Life</title>
+    <link>http://andrealmar.com/categories/emacs/</link>
+    <description>Recent content in Emacs on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Thu, 07 Jul 2016 10:50:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/emacs/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Getting Started with Spacemacs</title>
+      <link>http://andrealmar.com/2016/07/getting-started-with-spacemacs/</link>
+      <pubDate>Thu, 07 Jul 2016 10:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/07/getting-started-with-spacemacs/</guid>
+      <description>
+
+&lt;h2 id=&#34;a-little-bit-of-history&#34;&gt;A little bit of history&lt;/h2&gt;
+
+&lt;p&gt;The short answer to this is that if you care about performance and efficiency then you should be using WhiteNoise behind a CDN like CloudFront. If you’re doing that then, because of the caching headers WhiteNoise sends, the vast majority of static requests will be served directly by the CDN without touching your application, so it really doesn’t make much difference how efficient WhiteNoise is.&lt;br /&gt;
+&lt;br /&gt;
+That said, WhiteNoise is pretty efficient. Because it only has to serve a fixed set of files it does all the work of finding files and determining the correct headers upfront on initialization. Requests can then be served with little more than a dictionary lookup to find the appropriate response. Also, when used with gunicorn (and most other WSGI servers) the actual business of pushing the file down the network interface is handled by the kernel’s very efficient &lt;code&gt;sendfile&lt;/code&gt; syscall, not by Python.
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Here are the steps I used to install Spacemacs in your computer:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew tap d12frosted/emacs-plus
+brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
+brew linkapps
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Update to the latest version of emacs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew install emacs --with-cocoa
+brew linkapps emacs
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Siebel on This Coding Life</title>
+    <link>http://andrealmar.com/categories/siebel/</link>
+    <description>Recent content in Siebel on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Thu, 19 Nov 2015 19:00:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/siebel/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Restoring Siebel 6 attachments - Python script</title>
+      <link>http://andrealmar.com/2015/11/python-script-restore-siebel-6-attachments/</link>
+      <pubDate>Thu, 19 Nov 2015 19:00:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2015/11/python-script-restore-siebel-6-attachments/</guid>
+      <description>&lt;p&gt;Hi all, here is my solution to make the Siebel 6.3 attachments restore easier. Following the rules of automating boring stuff with Python, I did the script that I&amp;rsquo;m sharing with you guys. Enjoy!&lt;/p&gt;
+
+&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/df7d96a008923f60f96a.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;What the script does? You pass the ROW_ID and the script takes care of the rest. It will look at the database, find the FILE_REV_NUMBER, look at the purge folder and restore the attachment based on the ROW_ID that you entered.&lt;/p&gt;
+
+&lt;p&gt;Any questions? Please leave a comment below.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mongodb on This Coding Life</title>
+    <link>http://andrealmar.com/categories/mongodb/</link>
+    <description>Recent content in Mongodb on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 05 Dec 2015 09:20:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Installing MongoDB on Ubuntu Linux 14.04 (Trusty)</title>
+      <link>http://andrealmar.com/2015/12/installing-mongodb-ubuntu-trusty64/</link>
+      <pubDate>Sat, 05 Dec 2015 09:20:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2015/12/installing-mongodb-ubuntu-trusty64/</guid>
+      <description>&lt;p&gt;MongoDB is an open source, document-oriented database designed with both scalability and developer agility in mind. Instead of storing your data in tables and rows as you would with a relational database, in MongoDB you store JSON-like documents with dynamic schemas.  &lt;br /&gt;
+&lt;br /&gt;
+You can watch this video below for more information:   &lt;br /&gt;&lt;br /&gt;
+&lt;iframe width=&#34;420&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/CvIr-2lMLsk&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;br /&gt;&lt;br /&gt;
+Basically MongoDB is a non-relational datastore for JSON documents. The documents are stored in a &lt;strong&gt;collection&lt;/strong&gt;.
+A record in MongoDB is a document, which is a data structure composed of field and value pairs. MongoDB documents are similar to JSON objects. There are some characteristics like:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;schemaless - MongoDB has a dynamic schema which means that 2 (two) documents for example, doesn&amp;rsquo;t need to have the same schema.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;don&amp;rsquo;t support &lt;strong&gt;JOINS&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;don&amp;rsquo;t have &lt;strong&gt;TRANSACTIONS&lt;/strong&gt; across multiple documents/collections like a relational database.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Now that I&amp;rsquo;ve introduced you to MongoDB I will show you how to install it on a Linux box.&lt;/p&gt;
+
+&lt;p&gt;First thing you have to do of course is to download the latest stable version of MongoDB:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1404-3.0.7.tgz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Extract the files from the archive you just downloaded:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;tar -zxvf mongodb-linux-x86_64-ubuntu1410-clang-3.0.7.tgz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Copy the extracted archive to the target directory which means the location from which MongoDB will run:&lt;br /&gt;
+In my case I just renamed the mongodb-linux-x86_64-ubuntu1410-clang-3.0.7 directory to &lt;strong&gt;/mongodb&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mv mongodb-linux-x86_64-ubuntu1404-3.0.7 mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;add the following line to your shell’s rc file (e.g. ~/.bashrc):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vim ~/.bashrc
+export PATH=mongodb-install-directory/bin:$PATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Replace &lt;strong&gt;mongodb-install-directory&lt;/strong&gt; with the path to the extracted MongoDB archive.&lt;br /&gt;
+&lt;br /&gt;
+In my case it was:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;export PATH=/home/vagrant/mongodb/bin/:$PATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reload you bashrc configuration by typing the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before you start MongoDB for the first time, you have to create the directory in which the &lt;strong&gt;mongod&lt;/strong&gt; process will write data. By default, the &lt;strong&gt;mongod&lt;/strong&gt; process uses the &lt;strong&gt;/data/db&lt;/strong&gt; directory. If you create a directory other than this one, you must specify that directory in the &lt;strong&gt;dbpath&lt;/strong&gt; option when starting the &lt;strong&gt;mongod&lt;/strong&gt; process.
+&lt;br /&gt;&lt;br /&gt;
+I just created the default directory suggested by MongoDB:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mkdir -p /data/db
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then I changed the ownership from &lt;strong&gt;root&lt;/strong&gt; to my username&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo chown vagrant:vagrant -R /data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;hellip;because you have to ensure that the user account running &lt;strong&gt;mongod&lt;/strong&gt; has read and write permissions for the directory.&lt;br /&gt;
+&lt;br /&gt;
+Now run the &lt;strong&gt;mongod&lt;/strong&gt; process:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mongod
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you see this line above in your shell&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;NETWORK  [initandlisten] waiting for connections on port 27017
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;hellip;Congratulations!!! You have just installed MongoDB on Ubuntu Linux 14.04.&lt;br /&gt;
+&lt;br /&gt;
+See you next time.&lt;br /&gt;
+&lt;br /&gt;
+Source: MongoDB official website - &lt;a href=&#34;https://docs.mongodb.org/master/tutorial/install-mongodb-on-linux/&#34;&gt;Installing MongoDB on Linux&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

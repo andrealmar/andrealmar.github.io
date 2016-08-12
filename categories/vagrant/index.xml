@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vagrant on This Coding Life</title>
+    <link>http://andrealmar.com/categories/vagrant/</link>
+    <description>Recent content in Vagrant on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Mon, 04 Apr 2016 15:50:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/vagrant/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Containerizing your applications with Docker - Part 1</title>
+      <link>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/</link>
+      <pubDate>Mon, 04 Apr 2016 15:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/</guid>
+      <description>
+
+&lt;p&gt;Docker. First time I&amp;rsquo;ve heard about Docker and I did some research on this topic, I couldn&amp;rsquo;t understand what Docker was. I&amp;rsquo;m used to Virtual Machines, Vagrant and so on. I thought they (Docker and Vagrant) were the same thing but I was completely wrong. Let&amp;rsquo;s make first a brief introduction to some concepts to clarify what Docker is and how can we use it.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-a-virtual-machine-vm&#34;&gt;What is a Virtual Machine (VM)?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In computing, a virtual machine (VM) is an emulation of a particular computer system. Virtual machines operate based on the computer architecture and functions of a real or hypothetical computer, and their implementations may involve specialized hardware, software, or a combination of both.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A virtual machine (VM) is a software implementation of a machine (for example, a computer) that executes programs like a physical machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/virtual_machine.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Each virtual machine includes the application, the necessary binaries and libraries and an entire guest operating system - all of which &lt;strong&gt;may be tens of GBs in size&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-vagrant&#34;&gt;What is Vagrant?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Vagrant is a tool for building complete development environments. With an easy-to-use workflow and focus on automation, Vagrant lowers development environment setup time, increases development/production parity, and makes the &amp;ldquo;works on my machine&amp;rdquo; excuse a relic of the past.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is very interesting because it facilitates when a new developer is hired. All your new hire will need to do is to execute a simple command and the environment is set up.&lt;/p&gt;
+
+&lt;p&gt;You run a provisioning script against your virtual machine exactly as you would against a production or staging machine. In the provisioning script you tell Vagrant to install the correct version of Python, Django, set up the user permissions, configure anything that needs to be configured and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;In other words you can automate the creation of your environments. But, you are &lt;strong&gt;not&lt;/strong&gt; free from Virtual Machines. You can use different VM providers to work along with Vagrant but you &lt;strong&gt;have&lt;/strong&gt; to use one otherwise Vagrant won&amp;rsquo;t work. The most common is &lt;a href=&#34;http://www.virtualbox.org&#34;&gt;VirtualBox&lt;/a&gt;. Also, there are a lot of premade “boxes” ready to use. You can search them using:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.hashicorp.com/boxes/search&#34;&gt;https://atlas.hashicorp.com/boxes/search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.vagrantbox.es/&#34;&gt;http://www.vagrantbox.es/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/vagrant.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Vagrant in a nutshell:&lt;/strong&gt; Different boxes and we put our code in those different boxes.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-a-container&#34;&gt;What is a Container?&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/container.jpg&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Simple. Is something that looks like the photo above. =P Naahh&amp;hellip;just kidding.&lt;/p&gt;
+
+&lt;p&gt;Containers have similar resource isolation and allocation benefits as virtual machines but a different architectural approach allows them to be much more portable and efficient.&lt;/p&gt;
+
+&lt;p&gt;This whole idea is based on LXC (Linux Containers). LXC (Linux Containers) is an operating-system-level virtualization method for running multiple isolated Linux systems (containers) on a control host using a single Linux kernel.&lt;/p&gt;
+
+&lt;p&gt;With container-based virtualization, there isn&amp;rsquo;t the overhead associated with having each guest run a completely installed operating system. This approach can also improve performance because there is just one operating system taking care of hardware calls. A disadvantage of container-based virtualization, however, is that each guest must use the same operating system the host uses.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/lxc.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Containers include the application and all of its dependencies, but &lt;em&gt;share the kernel&lt;/em&gt; with other containers. They run as an isolated process in userspace on the host operating system. They’re also &lt;em&gt;not tied&lt;/em&gt; to any specific infrastructure – for example, Docker containers run on &lt;em&gt;any computer&lt;/em&gt;, on &lt;em&gt;any infrastructure&lt;/em&gt; and in any cloud.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-docker&#34;&gt;What is Docker?&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – anything you can install on a server. This guarantees that it will always run the same, regardless of the environment it is running in.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In Docker we can build our environment and run anywhere. If a machine has Docker on it the container is going to run and is going to work.&lt;/p&gt;
+
+&lt;p&gt;They act as Virtual Machines but they are really self-contained processes. You are really packaging a whole application or an entire environment inside a container.&lt;/p&gt;
+
+&lt;p&gt;You build your image once, push it to Docker Hub or Quay.io and now you can run your image anywhere.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/containers_diagram.png&#34;&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;installing-docker&#34;&gt;Installing Docker&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;m assuming you&amp;rsquo;re using Mac OS, for other OS follow the instructions on Docker homepage (&lt;a href=&#34;http://www.docker.com&#34;&gt;http://www.docker.com&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Go to the homepage (&lt;a href=&#34;http://www.docker.com&#34;&gt;http://www.docker.com&lt;/a&gt;), click on the &lt;em&gt;Get Started with Docker&lt;/em&gt; link. This will redirect you to &lt;a href=&#34;https://docs.docker.com/mac/&#34;&gt;https://docs.docker.com/mac/&lt;/a&gt; and then click on &lt;em&gt;Go to the next page to install&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The next page will tell you that because Docker Engine daemon uses Linux-specific kernel features, you can&amp;rsquo;t run Docker Engine natively in OS X. This is changing: &lt;a href=&#34;https://blog.docker.com/2016/03/docker-for-mac-windows-beta/&#34;&gt;https://blog.docker.com/2016/03/docker-for-mac-windows-beta/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;But for this tutorial we are going to use the &amp;ldquo;old&amp;rdquo; way!? Make sure your Mac is running OS X 10.8 “Mountain Lion” or newer to run Docker software. Install Docker Toolbox &lt;a href=&#34;https://www.docker.com/products/docker-toolbox&#34;&gt;https://www.docker.com/products/docker-toolbox&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to your launcher and click the Docker Quickstart Terminal:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_quickstart_launcher.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;A Terminal window will show up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_terminal.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;We are ready to test our Docker installation. To do that just type in your terminal the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you see this output below, you succeeded installing Docker:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Unable to find image &#39;hello-world:latest&#39; locally
+latest: Pulling from library/hello-world
+
+03f4658f8b78: Pull complete 
+a3ed95caeb02: Pull complete 
+Digest: sha256:8be990ef2aeb16dbcb9271ddfe2610fa6658d13f6dfb8bc72074cc1ca36966a7
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the &amp;quot;hello-world&amp;quot; image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker Hub account:
+ https://hub.docker.com
+
+For more examples and ideas, visit:
+ https://docs.docker.com/userguide/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See you on Part 2.&lt;/p&gt;
+
+&lt;p&gt;Bye,&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_machine&#34;&gt;https://en.wikipedia.org/wiki/Virtual_machine&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.docker.com/what-docker&#34;&gt;https://www.docker.com/what-docker&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/LXC&#34;&gt;https://en.wikipedia.org/wiki/LXC&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.mundodocker.com.br/&#34;&gt;http://www.mundodocker.com.br/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

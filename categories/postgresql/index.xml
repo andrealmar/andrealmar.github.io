@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Postgresql on This Coding Life</title>
+    <link>http://andrealmar.com/categories/postgresql/</link>
+    <description>Recent content in Postgresql on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Mon, 04 Apr 2016 20:50:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Containerizing your applications with Docker - Part 2</title>
+      <link>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/</link>
+      <pubDate>Mon, 04 Apr 2016 20:50:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/</guid>
+      <description>
+
+&lt;p&gt;Ready for Part 2? If you don&amp;rsquo;t read, please read &lt;a href=&#34;http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-i/&#34;&gt;Part 1&lt;/a&gt; which will give you a brief introduction in some concepts that you will need to grasp before get your hands dirty with Docker. Ok? So&amp;hellip;.Let&amp;rsquo;s get started.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;
+&lt;img src=&#34;http://andrealmar.com/images/docker.jpg&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;docker-image&#34;&gt;Docker Image&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Docker images are the basis of containers. It&amp;rsquo;s an encapsulated environment ready to be replicated wherever you want. Each time you’ve used &lt;em&gt;docker run&lt;/em&gt; you told it which image you wanted.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In the previous section of our tutorial you used a Docker image that already exists, the &lt;em&gt;library/hello-world&lt;/em&gt; image.&lt;/p&gt;
+
+&lt;p&gt;Remember that we did:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then we saw this output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Unable to find image &#39;hello-world:latest&#39; locally
+latest: Pulling from library/hello-world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Docker stores downloaded images on the Docker host. If an image isn’t already present on the host then it’ll be downloaded from a registry: by default the &lt;a href=&#34;https://registry.hub.docker.com/&#34;&gt;Docker Hub Registry&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you want to see a list of images that you have locally you can do it by using the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker images
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my case it shows those three images that I have locally:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+kartoza/postgis     latest              c209e16e71f7        5 days ago          496.1 MB
+ubuntu              latest              97434d46f197        2 weeks ago         188 MB
+hello-world         latest              690ed74de00f        5 months ago        960 B
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Docker also allows us to create our own images using a definition file called Dockerfile. With Dockerfile we can specify instructions and commands that tell Docker how to build our image. It&amp;rsquo;s literally a recipe.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create our image and in order to do that first we have to create a Dockerfile. Create a directory and inside that directory create a Dockerfile.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir directory_name
+cd directory_name
+touch Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Pause to teach you some Docker commands&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;docker-basic-commands&#34;&gt;Docker basic commands&lt;/h2&gt;
+
+&lt;p&gt;Here is a list of a very basic Docker commands that you are going to use often:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run &amp;lt;image&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This command will take any image, it will create a new container from the image and start that container.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker start &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Start an existing container that is not running.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker stop &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When a container is running you can use this command to stop the execution of that container.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker ps [-a include stopped containers]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Gives you a list of all your running containers. If you use the flag &lt;em&gt;-a&lt;/em&gt; it will show you all the stopped containers as well.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;docker rm &amp;lt;name|id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove / Delete a container&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Let&amp;rsquo;s continue creating our image&amp;hellip; We are creating a PostgreSQL 9.3 image in this tutorial.&lt;/p&gt;
+
+&lt;p&gt;Our Dockerfile will have to be like this:&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/andrealmar/bce56f7d8450990333703aa5c4ac8d61.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;The Dockerfile is self-explanatory, it&amp;rsquo;s well commented and if you have any questions please leave a comment below.&lt;/p&gt;
+
+&lt;p&gt;Now we have to &lt;strong&gt;build&lt;/strong&gt; our image. Let&amp;rsquo;s do this by typing the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker build -t andrealmar/postgresql:9.3 .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You’ve specified our docker build command and used the -t flag to identify our new image as andrealmar/postgresql:9.3 and also specified the location of our Dockerfile using the . to indicate a Dockerfile in the current directory.&lt;/p&gt;
+
+&lt;p&gt;Services are built once and then tagged as postgresql:9.3. If you change a service&amp;rsquo;s Dockerfile or the contents of its build directory, run &lt;em&gt;docker-compose build&lt;/em&gt; to rebuild it.&lt;/p&gt;
+
+&lt;p&gt;The Output will be something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Sending build context to Docker daemon 19.97 kB
+Step 1 : FROM ubuntu
+ ---&amp;gt; 97434d46f197
+Step 2 : MAINTAINER Andre Almar &amp;lt;andre@pydevv.com&amp;gt;
+ ---&amp;gt; Using cache
+ ---&amp;gt; 70763ebda914
+Step 3 : RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+ ---&amp;gt; Using cache
+ ---&amp;gt; 9baa8c54442c
+Step 4 : RUN echo &amp;quot;deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main&amp;quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list
+ ---&amp;gt; Using cache
+ ---&amp;gt; e86e2f540ecb
+Step 5 : RUN apt-get update &amp;amp;&amp;amp; apt-get install -y python-software-properties software-properties-common postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
+ ---&amp;gt; Using cache
+ ---&amp;gt; 69d82fd86acd
+Step 6 : USER postgres
+ ---&amp;gt; Using cache
+ ---&amp;gt; cd2593bf4bbe
+Step 7 : RUN /etc/init.d/postgresql start &amp;amp;&amp;amp;    psql --command &amp;quot;CREATE USER docker WITH SUPERUSER PASSWORD &#39;docker&#39;;&amp;quot; &amp;amp;&amp;amp;        createdb -O docker docker
+ ---&amp;gt; Using cache
+ ---&amp;gt; 9dbf59e35474
+Step 8 : RUN echo &amp;quot;host all  all    0.0.0.0/0  md5&amp;quot; &amp;gt;&amp;gt; /etc/postgresql/9.3/main/pg_hba.conf
+ ---&amp;gt; Using cache
+ ---&amp;gt; 327f7dc70201
+Step 9 : RUN echo &amp;quot;listen_addresses=&#39;*&#39;&amp;quot; &amp;gt;&amp;gt; /etc/postgresql/9.3/main/postgresql.conf
+ ---&amp;gt; Using cache
+ ---&amp;gt; 1b146766f710
+Step 10 : EXPOSE 5432
+ ---&amp;gt; Using cache
+ ---&amp;gt; e950c34ec810
+Step 11 : VOLUME /etc/postgresql /var/log/postgresql /var/lib/postgresql
+ ---&amp;gt; Using cache
+ ---&amp;gt; 5d15ea251ef9
+Step 12 : CMD /usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf
+ ---&amp;gt; Running in dc23742bbefd
+ ---&amp;gt; 5e614bcb798e
+Removing intermediate container dc23742bbefd
+Successfully built 5e614bcb798e
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our image was successfully built. Yay!!!&lt;/p&gt;
+
+&lt;p&gt;Now we have to run a container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -P --name pg_test andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note: The &amp;ndash;rm removes the container and its image when the container exits successfully.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We&amp;rsquo;ve built our image locally but we can push the image to the Docker Hub repository.&lt;/p&gt;
+
+&lt;p&gt;Go to &lt;a href=&#34;https://hub.docker.com/&#34;&gt;https://hub.docker.com/&lt;/a&gt; and register an account. Now in your terminal type:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker login
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert your credentials and you are ready to push your image to Docker Hub.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker push andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output will be something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The push refers to a repository [docker.io/andrealmar/postgresql]
+25061686dd38: Pushed 
+f3348af5962c: Pushed 
+dad10331254a: Pushed 
+601598d231fc: Pushed 
+d0448568fb1f: Pushed 
+7fedc9eff662: Pushed 
+5f70bf18a086: Mounted from kartoza/postgis 
+1b82ce694c3b: Mounted from library/ubuntu 
+db6b2d84f3c6: Mounted from library/ubuntu 
+05b940eef08d: Mounted from library/ubuntu 
+9.3: digest: sha256:ba69f101c2b8b4536bab692b83b528bbb8c9bd7931d5740840c7417833b52300 size: 10429
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you go to your Docker Hub account you will see that your image is published.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://andrealmar.com/images/docker_hub.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, now that we&amp;rsquo;ve built the PostgreSQL 9.3 image we have to run.&lt;/p&gt;
+
+&lt;p&gt;Please &lt;strong&gt;PAY ATTENTION&lt;/strong&gt; here because it will free you from headaches. I&amp;rsquo;ve lost a bunch of time trying to figure out this but with the help of &lt;em&gt;Sebastiaan van Stijn&lt;/em&gt; - &lt;a href=&#34;https://github.com/thaJeztah&#34;&gt;https://github.com/thaJeztah&lt;/a&gt; I was able to do this right.&lt;/p&gt;
+
+&lt;p&gt;The command below will run the container. When running on &lt;strong&gt;OS X&lt;/strong&gt;, the docker daemon (and containers) are running in a Virtual Machine.&lt;/p&gt;
+
+&lt;p&gt;If you want to access the PostgreSQL database from your OS X machine, you need to &lt;em&gt;&amp;ldquo;publish&amp;rdquo;&lt;/em&gt; the container&amp;rsquo;s port, to make them publicly accessible.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run -d -p 2345:5432 andrealmar/postgresql:9.3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Publishes port 5432 of the container on port 2345 on the host (the virtual machine in my case).&lt;/p&gt;
+
+&lt;p&gt;To access, use the IP-address of the virtual machine, which you can obtain via docker-machine:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-machine ip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;192.168.99.100
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You container is running so you are good to connect:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;psql -h 192.168.99.100 -p 2345 -U docker docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;psql (9.5.1, server 9.3.12)
+SSL connection (protocol: TLSv1.2, cipher: DHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+Type &amp;quot;help&amp;quot; for help.
+
+docker=# 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See you on Part 3.&lt;/p&gt;
+
+&lt;p&gt;Bye,&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/v1.5/compose/cli/&#34;&gt;https://docs.docker.com/v1.5/compose/cli/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://docs.docker.com/engine/examples/postgresql_service/&#34;&gt;https://docs.docker.com/engine/examples/postgresql_service/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.andreagrandi.it/2015/02/21/how-to-create-a-docker-image-for-postgresql-and-persist-data/&#34;&gt;https://www.andreagrandi.it/2015/02/21/how-to-create-a-docker-image-for-postgresql-and-persist-data/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.mundodocker.com.br/&#34;&gt;http://www.mundodocker.com.br/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/wsargent/docker-cheat-sheet&#34;&gt;https://github.com/wsargent/docker-cheat-sheet&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
