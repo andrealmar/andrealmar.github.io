@@ -9,40 +9,8 @@
     <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
     <webMaster>andre@y7mail.com (André Almar)</webMaster>
     <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
-    <lastBuildDate>Thu, 07 Jul 2016 10:50:27 -0300</lastBuildDate>
+    <lastBuildDate>Mon, 04 Apr 2016 20:50:27 -0300</lastBuildDate>
     <atom:link href="http://andrealmar.com/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>aaaaaaaaa</title>
-      <link>http://andrealmar.com/2016/07/getting-started-with-spacemacs/</link>
-      <pubDate>Thu, 07 Jul 2016 10:50:27 -0300</pubDate>
-      <author>andre@y7mail.com (André Almar)</author>
-      <guid>http://andrealmar.com/2016/07/getting-started-with-spacemacs/</guid>
-      <description>
-
-&lt;h2 id=&#34;a-little-bit-of-history&#34;&gt;A little bit of history&lt;/h2&gt;
-
-&lt;p&gt;The short answer to this is that if you care about performance and efficiency then you should be using WhiteNoise behind a CDN like CloudFront. If you’re doing that then, because of the caching headers WhiteNoise sends, the vast majority of static requests will be served directly by the CDN without touching your application, so it really doesn’t make much difference how efficient WhiteNoise is.&lt;br /&gt;
-&lt;br /&gt;
-That said, WhiteNoise is pretty efficient. Because it only has to serve a fixed set of files it does all the work of finding files and determining the correct headers upfront on initialization. Requests can then be served with little more than a dictionary lookup to find the appropriate response. Also, when used with gunicorn (and most other WSGI servers) the actual business of pushing the file down the network interface is handled by the kernel’s very efficient &lt;code&gt;sendfile&lt;/code&gt; syscall, not by Python.
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h2&gt;
-
-&lt;p&gt;Here are the steps I used to install Spacemacs in your computer:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew tap d12frosted/emacs-plus
-brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
-brew linkapps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Update to the latest version of emacs:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew install emacs --with-cocoa
-brew linkapps emacs
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
     
     <item>
       <title>Containerizing your applications with Docker - Part 2</title>
@@ -1097,6 +1065,94 @@ O evento UAI Python 2015 que aconteceu em Belo Horizonte - MG no dia 29/08/2015 
 &lt;p&gt;And that&amp;rsquo;s it. Now you can use the &lt;em&gt;activator run&lt;/em&gt; command and it will pass through your proxy without any problems.&lt;/p&gt;
 
 &lt;p&gt;See ya!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating a Python script to extract results to CSV from an Oracle Database</title>
+      <link>http://andrealmar.com/2015/06/creating-a-python-script-to-extract-results-to-csv-from-an-oracle-database/</link>
+      <pubDate>Wed, 10 Jun 2015 16:20:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2015/06/creating-a-python-script-to-extract-results-to-csv-from-an-oracle-database/</guid>
+      <description>&lt;p&gt;Maybe one day you guys will need to extract results from a Database and export to CSV. And the best way to do this is using a simple script using Python, a simple and elegant language. In my case, I needed simple stuff. Just extract the results from an Oracle Database in a CSV format. The output would be a report for the Business areas. Here are the steps I did in order to achieve the expected result.
+First of all you need to install latest Python version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+sudo yum install python
+sudo yum install python-devel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you need to to add the line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Defaults env_keep += &amp;quot;ORACLE_HOME&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;in your &lt;em&gt;visudo&lt;/em&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo visudo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and below the section&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Adding HOME to env_keep may enable a user to run unrestricted commands via sudo.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;add the line&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Defaults env_keep += &amp;quot;ORACLE_HOME&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you need to install Python &lt;em&gt;pip&lt;/em&gt;.
+Make sure that you have the _ORACLE&lt;em&gt;HOME&lt;/em&gt; variable set. Don&amp;rsquo;t forget that.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo yum install python-pip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and we can now install the _Oracle&lt;em&gt;CX&lt;/em&gt; library&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo pip install cx_Oracle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All set. Below is the code as I used to start developing the script. It connects to a DEMO DB (which comes with Oracle 12c).
+You can use it as a starting point for your needs.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import os
+import cx_Oracle
+import csv
+import time
+
+#SQL command to extract the report WHATEVER.csv
+SQL=&#39;&#39;&#39; select * from help where topic = &#39;ACCEPT&#39; &#39;&#39;&#39;
+
+#timestamp
+timestr = time.strftime(&amp;quot;%d-%m-%Y_%H:%M:%S&amp;quot;)
+
+filename=&#39;/interfaces/custom_sql/Extracao/utl_file_dir/WHATEVER&#39;+timestr+&#39;.csv&#39;
+FILE=open(filename,&amp;quot;w&amp;quot;);
+output=csv.writer(FILE, dialect=&#39;excel&#39;)
+
+#setting system variables
+#os.putenv(&#39;ORACLE_HOME&#39;, &#39;/u01/app/oracle/product/12.1.0/dbhome_1&#39;)
+#os.putenv(&#39;LD_LIBRARY_PATH&#39;, &#39;/u01/app/oracle/product/12.1.0/dbhome_1/lib&#39;)
+
+#connection with Oracle DB
+print &amp;quot;Realizando conexao com o Banco de Dados...&amp;quot;
+connection = cx_Oracle.connect(&#39;system/oracle@127.0.0.1/orcl&#39;)
+
+cursor = connection.cursor()
+cursor.execute(SQL)
+for row in cursor:
+	output.writerow(row)
+cursor.close()
+connection.close()
+FILE.close()
+
+print &amp;quot;END of extraction&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can check the script on my GitHub also: &lt;a href=&#34;https://github.com/andrealmar/csv_report_script/blob/master/csv_report.py&#34;&gt;python_csv_report&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;See you next time!&lt;/p&gt;
 </description>
     </item>
     
