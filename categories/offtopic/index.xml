@@ -9,37 +9,8 @@
     <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
     <webMaster>andre@y7mail.com (André Almar)</webMaster>
     <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
-    <lastBuildDate>Mon, 22 Jun 2015 14:00:27 -0300</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2015 17:30:27 -0300</lastBuildDate>
     <atom:link href="http://andrealmar.com/categories/offtopic/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>How to configure proxy in Play Framework</title>
-      <link>http://andrealmar.com/2015/06/how-to-configure-proxy-in-play-framework/</link>
-      <pubDate>Mon, 22 Jun 2015 14:00:27 -0300</pubDate>
-      <author>andre@y7mail.com (André Almar)</author>
-      <guid>http://andrealmar.com/2015/06/how-to-configure-proxy-in-play-framework/</guid>
-      <description>&lt;p&gt;If you are struggling to get Play Framework up and running and you are behind a proxy server here is the solution.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Go to your Play directory (in my case was:&lt;em&gt; /home/andrealmar/softwares/play&lt;/em&gt;)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Create the file &lt;strong&gt;activatorconfig.txt&lt;/strong&gt; in&lt;em&gt; ~/.activator/&lt;/em&gt; directory&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vim ~/.activator/activatorconfig.txt
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Put the configs below inside your activatorconfig.txt&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/744e02d247335f0a8d6f.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;And that&amp;rsquo;s it. Now you can use the &lt;em&gt;activator run&lt;/em&gt; command and it will pass through your proxy without any problems.&lt;/p&gt;
-
-&lt;p&gt;See ya!&lt;/p&gt;
-</description>
-    </item>
     
     <item>
       <title>Blog Posts &amp; Podcasts que influenciaram a minha carreira</title>
