@@ -83,6 +83,21 @@
     
     <div class="post">
       <h1 class="post-title">
+        <a href="http://andrealmar.com/2016/09/brew_error/">Fix brew update - Error: /usr/local must be writable!</a>
+      </h1>
+      <span class="post-date">Sep 28, 2016 &middot; 1 minute read &middot; <a href="http://andrealmar.com/2016/09/brew_error/#disqus_thread">Comments</a>
+      
+      <br/>
+      <a class="label" href="http://andrealmar.com/categories/ruby">ruby</a><a class="label" href="http://andrealmar.com/categories/mac">mac</a>
+      </span>
+      
+      Hi guys just a quick reminder on how to fix this Homebrew error below: I was running this command: brew update &amp;&amp; brew upgrade ruby-build It returned the error message below: Error: /usr/local is not writable. You should change the ownership and permissions of /usr/local back to your user account: sudo chown -R $(whoami) /usr/local Just fixed this by doing: sudo chown -R $(whoami) /usr/local And you are good to go.
+      <a href="http://andrealmar.com/2016/09/brew_error/">Read On &rarr;</a>
+      
+    </div>
+    
+    <div class="post">
+      <h1 class="post-title">
         <a href="http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/">Containerizing your applications with Docker - Part 2</a>
       </h1>
       <span class="post-date">Apr 4, 2016 &middot; 5 minute read &middot; <a href="http://andrealmar.com/2016/04/containerizing-your-applications-with-docker-part-ii/#disqus_thread">Comments</a>
@@ -213,21 +228,6 @@
       
       I was struggling with this because I was configuring my http_proxy, https_proxy and ftp_proxy using export but when I was doing sudo apt-get udpate, nothing happened. Did some research on StackOverflow and found the solution. So I&rsquo;m keeping the solution here for future reference. This problem happens because in some releases sudo is configured in such a way that all environment variables all cleared when running the command. My proxy didn&rsquo;t have authentication so I did: export http_proxy=&quot;http://proxy.servername:port/&quot; export https_proxy=&quot;http://proxy.servername:port/&quot; export ftp_proxy=&quot;http://proxy.servername:port/&quot; After that I did: visudo There is a line that states: Defaults env_reset After that line just add: Defaults env_keep = &quot;http_proxy https_proxy ftp_proxy&quot; Voilá.
       <a href="http://andrealmar.com/2015/10/how-to-run-sudo-apt-get-update-through-proxy-in-shell/">Read On &rarr;</a>
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="http://andrealmar.com/2015/09/uaipython-2015/">UAI Python 2015</a>
-      </h1>
-      <span class="post-date">Sep 22, 2015 &middot; 3 minute read &middot; <a href="http://andrealmar.com/2015/09/uaipython-2015/#disqus_thread">Comments</a>
-      
-      <br/>
-      <a class="label" href="http://andrealmar.com/categories/events">events</a>
-      </span>
-      
-      O evento UAI Python 2015 que aconteceu em Belo Horizonte - MG no dia 29/08/2015 na UNA Campus João Pinheiro. Todas as palestras foram ótimas e a organização do evento foi muito boa também. Segue abaixo um pequeno review sobre as palestras que achei mais interessantes no evento: import community - Fernando Massanori O professor Fernando Massanori nos deu um panorama e compartilhou suas experiências pessoais e relatos inspiradores sobre a comunidade Python em geral.
-      <a href="http://andrealmar.com/2015/09/uaipython-2015/">Read On &rarr;</a>
       
     </div>
     

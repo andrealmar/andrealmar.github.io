@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on This Coding Life</title>
+    <link>http://andrealmar.com/categories/mac/</link>
+    <description>Recent content in Mac on This Coding Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
+    <webMaster>andre@y7mail.com (André Almar)</webMaster>
+    <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
+    <lastBuildDate>Wed, 28 Sep 2016 13:45:27 -0300</lastBuildDate>
+    <atom:link href="http://andrealmar.com/categories/mac/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Fix brew update - Error: /usr/local must be writable!</title>
+      <link>http://andrealmar.com/2016/09/brew_error/</link>
+      <pubDate>Wed, 28 Sep 2016 13:45:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/09/brew_error/</guid>
+      <description>&lt;p&gt;Hi guys just a quick reminder on how to fix this Homebrew error below:&lt;/p&gt;
+
+&lt;p&gt;I was running this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew update &amp;amp;&amp;amp; brew upgrade ruby-build                                                     
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It returned the error message below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Error: /usr/local is not writable. You should change the ownership
+and permissions of /usr/local back to your user account:
+  sudo chown -R $(whoami) /usr/local
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just fixed this by doing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo chown -R $(whoami) /usr/local 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you are good to go.&lt;/p&gt;
+
+&lt;p&gt;{ }&amp;rsquo;s&lt;/p&gt;
+
+&lt;p&gt;Andre Almar&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

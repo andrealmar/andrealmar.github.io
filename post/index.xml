@@ -9,8 +9,41 @@
     <managingEditor>andre@y7mail.com (André Almar)</managingEditor>
     <webMaster>andre@y7mail.com (André Almar)</webMaster>
     <copyright>© 2016 Andre Almar, All Rights Reserved</copyright>
-    <lastBuildDate>Mon, 04 Apr 2016 20:50:27 -0300</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 13:45:27 -0300</lastBuildDate>
     <atom:link href="http://andrealmar.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Fix brew update - Error: /usr/local must be writable!</title>
+      <link>http://andrealmar.com/2016/09/brew_error/</link>
+      <pubDate>Wed, 28 Sep 2016 13:45:27 -0300</pubDate>
+      <author>andre@y7mail.com (André Almar)</author>
+      <guid>http://andrealmar.com/2016/09/brew_error/</guid>
+      <description>&lt;p&gt;Hi guys just a quick reminder on how to fix this Homebrew error below:&lt;/p&gt;
+
+&lt;p&gt;I was running this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;brew update &amp;amp;&amp;amp; brew upgrade ruby-build                                                     
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It returned the error message below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Error: /usr/local is not writable. You should change the ownership
+and permissions of /usr/local back to your user account:
+  sudo chown -R $(whoami) /usr/local
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just fixed this by doing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;sudo chown -R $(whoami) /usr/local 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you are good to go.&lt;/p&gt;
+
+&lt;p&gt;{ }&amp;rsquo;s&lt;/p&gt;
+
+&lt;p&gt;Andre Almar&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Containerizing your applications with Docker - Part 2</title>
@@ -1143,48 +1176,6 @@ E você? Existem algum profissional no qual você se espelhe? Deixe seus coment�
 Assim que forem surgindo mais posts eu vou atualizando esta lista ou até mesmo criando uma parte II deste post.
 &lt;br /&gt;
 [ ]&amp;rsquo;s&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Playing with Play Framework and JSch - Java Secure Channel</title>
-      <link>http://andrealmar.com/2015/03/playing-with-play-framework-and-jsch-java-secure-channel/</link>
-      <pubDate>Thu, 05 Mar 2015 14:20:27 -0300</pubDate>
-      <author>andre@y7mail.com (André Almar)</author>
-      <guid>http://andrealmar.com/2015/03/playing-with-play-framework-and-jsch-java-secure-channel/</guid>
-      <description>&lt;p&gt;Today I&amp;rsquo;m gonna show you how to use the the Java library &lt;em&gt;JSch - Java Secure Channel&lt;/em&gt; to connect to a server and send SSH commands to a UNIX shell and then return the output to our webpage. I&amp;rsquo;m using &lt;em&gt;Play Framework&lt;/em&gt; to develop this webapp. If you want to know more about Play Framework just visit &lt;a href=&#34;http://www.playframework.com&#34; title=&#34;http://www.playframework.com&#34;&gt;http://www.playframework.com&lt;/a&gt;&lt;br /&gt;
-&lt;br /&gt;
-A little bit about &lt;em&gt;JSch&lt;/em&gt;:
-&lt;em&gt;JSch&lt;/em&gt; is a pure Java implementation of &lt;a href=&#34;http://ietf.org/html.charters/secsh-charter.html&#34; target=&#34;_blank&#34;&gt;SSH2&lt;/a&gt;.&lt;br /&gt;
-&lt;em&gt;JSch&lt;/em&gt; allows you to connect to an sshd server and use port forwarding, X11 forwarding, file transfer, etc., and you can integrate its functionality into your own Java programs. &lt;em&gt;JSch&lt;/em&gt; is licensed under &lt;a href=&#34;http://www.jcraft.com/jsch/LICENSE.txt&#34;&gt;BSD style license&lt;/a&gt;.&lt;/p&gt;
-You can find more information about the library in &lt;a href=&#34;http://www.jcraft.com/jsch/&#34;&gt;http://www.jcraft.com/jsch/&lt;/a&gt;
-&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;Case scenario:&lt;/strong&gt;&lt;br /&gt;
-I want to send a SSH command to an UNIX server via some Java class. I want to the output of this command that I sent is shown in the user&amp;rsquo;s screen through the web browser.
-Our environment uses a Private Key to allow SSH connections between one machine to another. In the code snippets you will see that the keys are passed through the method:&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;jsch.addIdentity();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;br /&gt;
-1st: the code snippet for the controller &lt;em&gt;Application.java&lt;/em&gt;:&lt;/p&gt;
-
-&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/68c6d49d4dad3d24642c.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-2nd: the code snippet for the controller Control.java:&lt;/p&gt;
-
-&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/26d6005e35cd3a1c6911.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-Output of the command being displayed in a web browser:&lt;br /&gt;
-&lt;br /&gt;
-&lt;img src=&#34;http://andrealmar.com/images/play-JSch.png&#34;&gt;&lt;br /&gt;
-That&amp;rsquo;s all. See ya next time!&lt;/p&gt;
-
-&lt;p&gt;{}&amp;rsquo;s&lt;/p&gt;
 </description>
     </item>
     
