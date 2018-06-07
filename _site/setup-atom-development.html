@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>How to setup ATOM as your Python development environment</title>
+  <meta name="description" content="How to setup ATOM as your Python development environment">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+	<div id="wrap">
+
+	  <!-- Navigation -->
+	  <nav id="nav">
+	<div id="nav-list">
+		<a href="//">Home</a>
+
+		<!-- Nav pages -->
+	  
+	    
+	  
+	    
+	      <a href="/about" title="About">About</a>
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+    
+    <!-- Nav links -->
+	  <a href="#">Reading</a>
+
+
+	</div>
+  
+  <!-- Nav footer -->
+	
+	  <footer>
+	
+	<span>version 1.0.0</span>
+
+</footer>
+	
+
+</nav>
+
+
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	      <div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="//">
+        <h1>
+          <span>andre</span>almar
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+	    
+	      
+	    
+	      
+	        <a href="/about" title="About">About</a>
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+
+      <!-- Nav links -->
+	    <a href="#">Reading</a>
+
+
+    </span>
+  </div>
+</header>
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+
+	  <main>
+
+	    <article id="post-page">
+	<h1>How to setup ATOM as your Python development environment</h1>
+	<time datetime="2016-02-04T00:00:00-02:00" class="by-line">04 Feb 2016</time>
+	<div class="content">
+
+		<p>PyCharm is an awesome IDE for Python Development and I use it a lot. But sometimes it gets soooo heavier that I want to kill myself. Then I’ve found ATOM. ATOM is a coding editor created by the GitHub team with the goal to be simple, powerful and highly customizable.</p>
+
+<p>There are some features that I really like in ATOM like:</p>
+
+<ul>
+  <li>Built-in package manager</li>
+  <li>Multiple panes</li>
+  <li>File system browser</li>
+</ul>
+
+<p>If you want to give it a try and use ATOM as your Python development environment, keep reading and I’ll show you how I configure my ATOM settings to make easier for us Python developers to have a very simple and powerful development environment.</p>
+
+<p>I’m using a Macbook so I’m assuming you are using one too. Hit <code class="highlighter-rouge">Command + ,</code> and this will bring the Settings tab. If you use another OS change the <code class="highlighter-rouge">Command</code> key to <code class="highlighter-rouge">Ctrl</code> key.</p>
+
+<p>In Editor Settings, check the <code class="highlighter-rouge">Back Up Before Saving</code> box. This will avoid corrupt files in case of failure during file save process.</p>
+
+<p>Go below and check the <code class="highlighter-rouge">Show Indent Guide</code> and <code class="highlighter-rouge">Show Invisibles</code> boxes. This options will help you navigate through your code showing the indentation. This is very helpful specially when you are working with Web Development and HTML files.</p>
+
+<p>On the left Menu, click on Install option. We are going to install the following packages:</p>
+
+<ul>
+  <li>linter-flake8</li>
+  <li>linter-pep8</li>
+  <li>autocomplete-python</li>
+  <li>django-templates</li>
+</ul>
+
+<p>The installation is pretty straightforward, you search for the package and after you’ve found it you click on Install. It’s simple as that.</p>
+
+<p>After that, your ATOM will be ready to rock some Python code. But we are not finished yet. If you try to open a Python project using ATOM you will notice that things are not working well.</p>
+
+<p><img src="/img/atom-python.png" alt="" title="Atom" /></p>
+
+<p>This happens because ATOM uses <code class="highlighter-rouge">pep8</code>, <code class="highlighter-rouge">flake8</code> and <code class="highlighter-rouge">jedi</code> packages in its plugins. That’s why we need to install those Python packages.</p>
+
+<p>You already created your Python Virtual Environment following the best practices right? If so we are going to install the following Python packages:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span></code></pre></figure>
+
+<p>In my case venv is the name of my Virtualenv environment.</p>
+
+<p>More on Virtualenv’s here: http://docs.python-guide.org/en/latest/dev/virtualenvs/</p>
+
+<p>Now proceed with the installation of the Python packages:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pip</span> <span class="n">install</span> <span class="n">pep8</span> <span class="n">flake8</span> <span class="n">jedi</span></code></pre></figure>
+
+<p>And we’re done. Very simple and you will have your ATOM editor ready to use as your Python Development environment</p>
+
+<p>See ya !!!</p>
+
+
+	</div>
+</article>
+
+
+	  </main>
+
+		  <!-- Pagination links -->
+      
+
+	  </div>
+
+	    <!-- Footer -->
+	    <footer><span>@2018 - andrealmar.com</span></footer>
+
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>	
+
+
+	</div>
+</body>
+</html>

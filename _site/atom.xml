@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Andre Almar | random musings about software</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <id>http://localhost:4000</id>
+ <updated>2018-06-07T11:10:44-03:00</updated>
+ <author>
+   <name>Andre Almar</name>
+   <uri>http://andrealmar.com</uri>
+   <email>andre@y7mail.com</email>
+ </author>
+
+ 
+
+ <entry>
+   <title>Joining AppProva</title>
+   <link href="http://localhost:4000/joining-appprova"/>
+   <id>http://localhost:4000/joining-appprova</id>
+   <updated>2018-03-27T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;On February of 2018 I decided to leave my old job to pursue new goals. I was there for about two and a half years, and it was time to part ways. I’ve being focusing on DevOps space in the last couple of years. I’ve even become a Meetup organizer...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Books I've read in 2017.</title>
+   <link href="http://localhost:4000/books-read-2017"/>
+   <id>http://localhost:4000/books-read-2017</id>
+   <updated>2017-12-31T00:00:00-02:00</updated>
+   <content type="html">&lt;p&gt;Continuing with the tradition of posting the list of books I’ve read on the current year here is the list of books I’ve read in 2017:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;https://wol.jw.org/pt/wol/b/r5/lp-t/nwt/T/2015/21/1#study=discover&quot; target=&quot;_blank&quot;&gt;Eclesiastes – Rei Salomão&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://www.amazon.com/gp/product/B01N6RPRD7&quot; target=&quot;_blank&quot;&gt;Arábia: A Incrível História De Um Brasileiro no Oriente Médio – Raiam dos Santos&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Books I've read in 2016.</title>
+   <link href="http://localhost:4000/books-read-2016"/>
+   <id>http://localhost:4000/books-read-2016</id>
+   <updated>2016-12-31T00:00:00-02:00</updated>
+   <content type="html">&lt;p&gt;One of my goals every year is to read more books. I read a lot I must say but it is always good to read more and add knowledge to your brain. After I’ve found Audible things got easier. I can listen to an Audiobook while I’m at the gym...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Serving static files in Django with WhiteNoise</title>
+   <link href="http://localhost:4000/serving-static-files-django-whitenoise"/>
+   <id>http://localhost:4000/serving-static-files-django-whitenoise</id>
+   <updated>2016-03-03T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;Hi, in this post I’m going to show you how to use WhiteNoise to serve static files in a Django app. WhiteNoise is a library built to radically simplify static file serving for Python web applications.&lt;/p&gt; &lt;p&gt;With a couple of lines of config WhiteNoise allows your web app to serve...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Python Generators</title>
+   <link href="http://localhost:4000/python-generators"/>
+   <id>http://localhost:4000/python-generators</id>
+   <updated>2016-03-02T00:00:00-03:00</updated>
+   <content type="html">&lt;blockquote&gt; &lt;p&gt;I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on &lt;br /&gt; Yeah can’t you hear my motored heart You’re the one that started it&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;&lt;img src=&quot;/img/foo_fighters_generator.png&quot; alt=&quot;&quot; title=&quot;Foo FIghters - Generator (single)&quot; /&gt;&lt;/p&gt; &lt;p&gt;Não…eu não vou escrever neste post sobre...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>How to setup ATOM as your Python development environment</title>
+   <link href="http://localhost:4000/setup-atom-development"/>
+   <id>http://localhost:4000/setup-atom-development</id>
+   <updated>2016-02-04T00:00:00-02:00</updated>
+   <content type="html">&lt;p&gt;PyCharm is an awesome IDE for Python Development and I use it a lot. But sometimes it gets soooo heavier that I want to kill myself. Then I’ve found ATOM. ATOM is a coding editor created by the GitHub team with the goal to be simple, powerful and highly customizable.&lt;/p&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Blog Posts & Podcasts que influenciaram a minha carreira</title>
+   <link href="http://localhost:4000/blog-posts-podcasts-que-influenciaram-a-minha-carreira"/>
+   <id>http://localhost:4000/blog-posts-podcasts-que-influenciaram-a-minha-carreira</id>
+   <updated>2015-04-10T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;Sabemos que cada ser humano é moldado pelo meio que vive, por aquilo que vê, por aquilo que escuta, por aquilo que consome e pelas experiências que vive! Vou listar abaixo blog posts e podcasts que fizeram/fazem influência de alguma forma em minha carreira ou meu modo de pensar no...</content>
+ </entry>
+
+ 
+
+</feed>

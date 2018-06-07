@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>Serving static files in Django with WhiteNoise</title>
+  <meta name="description" content="Serving static files in Django with WhiteNoise">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+	<div id="wrap">
+
+	  <!-- Navigation -->
+	  <nav id="nav">
+	<div id="nav-list">
+		<a href="//">Home</a>
+
+		<!-- Nav pages -->
+	  
+	    
+	  
+	    
+	      <a href="/about" title="About">About</a>
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+    
+    <!-- Nav links -->
+	  <a href="#">Reading</a>
+
+
+	</div>
+  
+  <!-- Nav footer -->
+	
+	  <footer>
+	
+	<span>version 1.0.0</span>
+
+</footer>
+	
+
+</nav>
+
+
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	      <div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="//">
+        <h1>
+          <span>andre</span>almar
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+	    
+	      
+	    
+	      
+	        <a href="/about" title="About">About</a>
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+
+      <!-- Nav links -->
+	    <a href="#">Reading</a>
+
+
+    </span>
+  </div>
+</header>
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+
+	  <main>
+
+	    <article id="post-page">
+	<h1>Serving static files in Django with WhiteNoise</h1>
+	<time datetime="2016-03-03T00:00:00-03:00" class="by-line">03 Mar 2016</time>
+	<div class="content">
+
+		<p>Hi, in this post I’m going to show you how to use WhiteNoise to serve static files in a Django app. WhiteNoise is a library built to radically simplify static file serving for Python web applications.</p>
+
+<p>With a couple of lines of config WhiteNoise allows your web app to serve its own static files, making it a self-contained unit that can be deployed anywhere without relying on nginx, Amazon S3 or any other external service. (Especially useful on Heroku, OpenShift and other PaaS providers.)</p>
+
+<h2 id="isnt-serving-static-files-from-python-horribly-inefficient">Isn’t serving static files from Python horribly inefficient?</h2>
+
+<p>The short answer to this is that if you care about performance and efficiency then you should be using WhiteNoise behind a CDN like CloudFront. If you’re doing that then, because of the caching headers WhiteNoise sends, the vast majority of static requests will be served directly by the CDN without touching your application, so it really doesn’t make much difference how efficient WhiteNoise is.</p>
+
+<p>That said, WhiteNoise is pretty efficient. Because it only has to serve a fixed set of files it does all the work of finding files and determining the correct headers upfront on initialization.</p>
+
+<p>Requests can then be served with little more than a dictionary lookup to find the appropriate response. Also, when used with gunicorn (and most other WSGI servers) the actual business of pushing the file down the network interface is handled by the kernel’s very efficient sendfile syscall, not by Python.</p>
+
+<h2 id="shouldnt-i-be-pushing-my-static-files-to-s3-using-something-like-django-storages">Shouldn’t I be pushing my static files to S3 using something like Django-Storages?</h2>
+
+<p>No, you shouldn’t. The main problem with this approach is that Amazon S3 cannot currently selectively serve gzipped content to your users. Gzipping can make dramatic reductions in the bandwidth required for your CSS and JavaScript.</p>
+
+<p>But while all browsers in use today can decode gzipped content, your users may be behind crappy corporate proxies or anti-virus scanners which don’t handle gzipped content properly. Amazon S3 forces you to choose whether to serve gzipped content to no-one (wasting bandwidth) or everyone (running the risk of your site breaking for certain users).</p>
+
+<p>The correct behaviour is to examine the Accept-Encoding header of the request to see if gzip is supported, and to return an appropriate Vary header so that intermediate caches know to do the same thing. This is exactly what WhiteNoise does.</p>
+
+<p>The second problem with a push-based approach to handling static files is that it adds complexity and fragility to your deployment process: extra libraries specific to your storage backend, extra configuration and authentication keys, and extra tasks that must be run at specific points in the deployment in order for everything to work.</p>
+
+<p>With the CDN-as-caching-proxy approach that WhiteNoise takes there are just two bits of configuration: your application needs the URL of the CDN, and the CDN needs the URL of your application. Everything else is just standard HTTP semantics. This makes your deployments simpler, your life easier, and you happier. Enough talking, let’s go to action.</p>
+
+<p>Install the WhiteNoise package:</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">pip <span class="nb">install </span>whitenoise</code></pre></figure>
+
+<p>Open your settings.py and add the following:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'staticfiles'</span><span class="p">)</span></code></pre></figure>
+
+<p>Run <code class="highlighter-rouge">python manage.py collectstatic</code> to put all your static files into <code class="highlighter-rouge">STATIC_ROOT</code> (If you’re running on Heroku then this is done automatically for you.)</p>
+
+<p>Also add in your settings.py:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="kn">from</span> <span class="nn">whitenoise</span> <span class="kn">import</span> <span class="n">WhiteNoise</span>
+
+<span class="c"># Simplified static file serving with WhiteNoise adding cachable files and gzip support</span>
+<span class="n">STATICFILES_STORAGE</span> <span class="o">=</span> <span class="s">'whitenoise.django.GzipManifestStaticFilesStorage'</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Open your <strong>wsgi.py</strong> and <em>install</em> WhiteNoise inside your Django application:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="kn">from</span> <span class="nn">whitenoise.django</span> <span class="kn">import</span> <span class="n">DjangoWhiteNoise</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">DjangoWhiteNoise</span><span class="p">(</span><span class="n">application</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Note in the code above that we are wrapping our existing WSGI application in a WhiteNoise instance with <code class="highlighter-rouge">DjangoWhiteNoise(applications)</code> this is how your application will now serve static assets directly from Gunicorn in production. This will be perfectly adequate for most applications, but top-tier applications may want to explore using a CDN with Django-Storages.</p>
+
+<p>See ya!</p>
+
+
+	</div>
+</article>
+
+
+	  </main>
+
+		  <!-- Pagination links -->
+      
+
+	  </div>
+
+	    <!-- Footer -->
+	    <footer><span>@2018 - andrealmar.com</span></footer>
+
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>	
+
+
+	</div>
+</body>
+</html>

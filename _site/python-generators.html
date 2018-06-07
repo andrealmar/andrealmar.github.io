@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>Python Generators</title>
+  <meta name="description" content="Andre Almar personal website powered by Jekyll.">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+	<div id="wrap">
+
+	  <!-- Navigation -->
+	  <nav id="nav">
+	<div id="nav-list">
+		<a href="//">Home</a>
+
+		<!-- Nav pages -->
+	  
+	    
+	  
+	    
+	      <a href="/about" title="About">About</a>
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+    
+    <!-- Nav links -->
+	  <a href="#">Reading</a>
+
+
+	</div>
+  
+  <!-- Nav footer -->
+	
+	  <footer>
+	
+	<span>version 1.0.0</span>
+
+</footer>
+	
+
+</nav>
+
+
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	      <div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="//">
+        <h1>
+          <span>andre</span>almar
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+	    
+	      
+	    
+	      
+	        <a href="/about" title="About">About</a>
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+
+      <!-- Nav links -->
+	    <a href="#">Reading</a>
+
+
+    </span>
+  </div>
+</header>
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+
+	  <main>
+
+	    <article id="post-page">
+	<h1>Python Generators</h1>
+	<time datetime="2016-03-02T00:00:00-03:00" class="by-line">02 Mar 2016</time>
+	<div class="content">
+
+		<blockquote>
+  <p>I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on <br />
+Yeah can’t you hear my motored heart You’re the one that started it</p>
+</blockquote>
+
+<p><img src="/img/foo_fighters_generator.png" alt="" title="Foo FIghters - Generator (single)" /></p>
+
+<p>Não…eu não vou escrever neste post sobre a ótima música do Foo Fighters, embora recomendo que você a escute =P. Estamos aqui para falar de uma função bastante legal na nossa linguagem de programação preferida: Os famosos Generators.</p>
+
+<p>Em termo simples os <code class="highlighter-rouge">Generators</code> são funções que permitem a você declarar uma função que se comporta como um iterador, ou seja, que pode ser usado dentro de um loop for.</p>
+
+<p>Simplificando mais ainda: Generators são uma forma simples de criarmos iteradores. Ele irá retornar um objeto (iterador) para que possamos iterar sobre este objeto (um valor de cada vez).</p>
+
+<p>É muito simples criar uma função Generator, mas existem algumas peculiaridades. Por exemplo, nós usamos a declaração <code class="highlighter-rouge">yield</code> ao invés de <code class="highlighter-rouge">return</code>. Se a função contém ao menos uma declaração <code class="highlighter-rouge">yield</code> então ela se torna uma função Generator.</p>
+
+<p>Um exemplo bem simples. Abra o seu interpretador Python e digite a função abaixo:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Essa  uma função Generator"</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">n</span>
+
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">yield</span> <span class="n">n</span>
+
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">yield</span> <span class="n">n</span></code></pre></figure>
+
+<p>Vamos agora, executar a função no interpretador Python:</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span> <span class="c"># Retorna um objeto mas não executa a função imediatamente.</span>
+<span class="o">&gt;&gt;&gt;</span> a <span class="o">=</span> generator<span class="o">()</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Podemos iterar sobre os items usando next().</span>
+<span class="o">&gt;&gt;&gt;</span> next<span class="o">(</span>a<span class="o">)</span>
+
+Essa  uma função Generator
+1
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Assim que a função executa o yield, ela é pausada e o controle da execução é transferido para quem a chamou.</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Variáveis locais e os seus estados são "lembradas" durante as sucessivas chamadas à função.</span>
+<span class="o">&gt;&gt;&gt;</span> next<span class="o">(</span>a<span class="o">)</span>
+2
+<span class="o">&gt;&gt;&gt;</span> next<span class="o">(</span>a<span class="o">)</span>
+3
+
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Quando a função termina, a exceção StopIteration é levantada automaticamente.</span>
+<span class="o">&gt;&gt;&gt;</span> next<span class="o">(</span>a<span class="o">)</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+...
+StopIteration
+<span class="o">&gt;&gt;&gt;</span> next<span class="o">(</span>a<span class="o">)</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+...
+StopIteration</code></pre></figure>
+
+<p>Interessante notar que o valor da variável a no exemplo acima é lembrada durante cada chamada do método next(). Nós declaramos 3 yields, então o valor da variável a será lembrado por 3 vezes. Quando tentamos chamar next(a) pela 4a vez, veja o que acontece:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="c"># Quando a função termina, a exceção StopIteration é levantada automaticamente.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="nb">StopIteration</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="nb">StopIteration</span></code></pre></figure>
+
+<p>Uma exceção <code class="highlighter-rouge">StopIteration</code> é lançada, alertando que a iteração acabou. Ou seja, as variáveis locais NÃO são destruídas quando usamos o <code class="highlighter-rouge">yield</code>. O objeto Generator só pode ser iterado uma única vez. Se quisermos restartar o processo nós precisaremos criar um outro objeto Generator, por exemplo <code class="highlighter-rouge">b = generator()</code>.</p>
+
+<p>Também podemos utilizar Generators dentro de um laço for diretamente. Isso porque o laço for também utiliza a função <code class="highlighter-rouge">next()</code> para iterar e automaticamente encerra a iteração quando a exceção <code class="highlighter-rouge">StopIteration</code> é lançada.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">&gt;&gt;&gt;</span> <span class="k">for </span>item <span class="k">in </span>generator<span class="o">()</span>:
+...     print<span class="o">(</span>item<span class="o">)</span>
+...
+Essa é uma função Generator
+1
+2
+3
+<span class="o">&gt;&gt;</span></code></pre></figure>
+
+<h3 id="generators-expressions">Generators Expressions</h3>
+
+<p>As <code class="highlighter-rouge">Generators Expressions</code> facilitam à criação de Generators. Assim como uma função lambda cria uma função anônima, uma <code class="highlighter-rouge">Generator Expression</code> cria uma função Generator anônima. A sintaxe é bem parecida com as famosas <code class="highlighter-rouge">List Comprehensions</code> com o pequeno detalhe de que os colchetes <code class="highlighter-rouge">[ ]</code> são subsituídos pelos parênteses <code class="highlighter-rouge">()</code>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">list_comprehension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">generator_expression</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">generator_expression</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">generator_expression</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x101812af0</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">list_comprehension</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">list_comprehension</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span></code></pre></figure>
+
+<p>Note no exemplo acima que a <code class="highlighter-rouge">List Comprehension</code> nos retorna a lista em si mas a <code class="highlighter-rouge">Generator Expression</code> nos retorna o objeto gerado: <code class="highlighter-rouge">&lt;generator object &lt;genexpr&gt; at 0x101812af0&gt;</code>.</p>
+
+<p>A outra vantagem é que enquanto a <code class="highlighter-rouge">List Comprehension</code> gera a lista inteira, a <code class="highlighter-rouge">Generator Expression</code> gera um item de cada vez. Isso também é chamado de <em>lazy ou on demand generation of values</em>. E por consequência de ser lazy (preguiçosa), a <code class="highlighter-rouge">Generator Expression</code> consome bem menos memória sendo mais eficiente do que uma <code class="highlighter-rouge">List Comprehension</code>.</p>
+
+<p>Espero que tenham gostado dessa explicação a respeito dos Generators.</p>
+
+<p>See ya !!!</p>
+
+
+	</div>
+</article>
+
+
+	  </main>
+
+		  <!-- Pagination links -->
+      
+
+	  </div>
+
+	    <!-- Footer -->
+	    <footer><span>@2018 - andrealmar.com</span></footer>
+
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>	
+
+
+	</div>
+</body>
+</html>
