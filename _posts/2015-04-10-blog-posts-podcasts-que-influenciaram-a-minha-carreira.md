@@ -6,7 +6,7 @@ header: Blog Posts e Podcasts que Influenciaram à minha Carreira
 
 Sabemos que cada ser humano é moldado pelo meio que vive, por aquilo que vê, por aquilo que escuta, por aquilo que consome e pelas experiências que vive! Vou listar abaixo blog posts e podcasts que fizeram/fazem influência de alguma forma em minha carreira ou meu modo de pensar no que diz respeito a carreira e trabalho de um modo geral.
 
-_AkitaOnRails.com - Fábio Akita_
+### AkitaOnRails.com - Fábio Akita
 
 [Seja Arrogante](http://www.akitaonrails.com/2007/04/14/off-topic-seja-arrogante "Seja Arrogante")
 
@@ -18,17 +18,17 @@ _AkitaOnRails.com - Fábio Akita_
 
 [Um Desabafo III](http://www.akitaonrails.com/2012/12/30/off-topic-um-desabafo-iii-refletindo-sobre-2007 "Um Desabafo III")
 
-_SimpleProgrammer.com - John Sonmez_
+### SimpleProgrammer.com - John Sonmez
 
 [Want to accomplish your goals? Become a Finisher](http://simpleprogrammer.com/2014/12/29/want-accomplish-goals-become-finisher "Want to accomplish your goals? Become a Finisher")
 
-_JulioBattisti.com.br - Júlio Battisti_
+### JulioBattisti.com.br - Júlio Battisti
 
 [Vencer é uma questão de postura](http://juliobattisti.com.br/artigos/carreira/postura.asp "Vencer é uma questão de postura")
 
 [O profissional atual = um ser humano completo](http://juliobattisti.com.br/artigos/carreira/serhumano.asp "O profissional atual = um ser humano completo")
 
-_1bit.com.br - Rodrigo Strauss_
+### 1bit.com.br - Rodrigo Strauss
 
 [Como ser um bom programador](http://1bit.com.br/content.1bit/bom_programador "Como ser um bom programador")
 
@@ -36,7 +36,7 @@ _1bit.com.br - Rodrigo Strauss_
 
 [Os contos que as empresas contam](http://1bit.com.br/content.1bit/weblog/contos_empresas "Os contos que as empresas contam")
 
-_grokpodcast.com - Grok Podcast_
+### grokpodcast.com - Grok Podcast
 
 [Carreira na área de TI - Parte I](http://www.grokpodcast.com/2011/03/31/episodio-25-carreira-na-area-de-ti-parte-1 "Carreira na área de TI - Parte I")
 
