@@ -4,7 +4,7 @@
  <title>Andre Almar | random musings about software</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-06-08T11:53:06-03:00</updated>
+ <updated>2018-06-08T14:18:13-03:00</updated>
  <author>
    <name>Andre Almar</name>
    <uri>http://andrealmar.com</uri>
@@ -29,6 +29,16 @@
    <id>http://localhost:4000/books-read-2017</id>
    <updated>2017-12-31T00:00:00-02:00</updated>
    <content type="html">&lt;p&gt;Continuing with the tradition of posting the list of books I’ve read on the current year here is the list of books I’ve read in 2017:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;https://wol.jw.org/pt/wol/b/r5/lp-t/nwt/T/2015/21/1#study=discover&quot; target=&quot;_blank&quot;&gt;Eclesiastes – Rei Salomão&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://www.amazon.com/gp/product/B01N6RPRD7&quot; target=&quot;_blank&quot;&gt;Arábia: A Incrível História De Um Brasileiro no Oriente Médio – Raiam dos Santos&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>SRE/DevOps skills that companies want</title>
+   <link href="http://localhost:4000/sre-devops-skills-companies-want"/>
+   <id>http://localhost:4000/sre-devops-skills-companies-want</id>
+   <updated>2017-07-27T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;What skills do companies really want when they are looking for DevOps / SRE professionals? I’ve analysed 50 job postings to tell you what companies want when they are hiring for DevOps and SRE (Site Reliability Engineer) positions.&lt;/p&gt; &lt;p&gt;&lt;em&gt;P.S - In this post, I am going to treat DevOps and...</content>
  </entry>
 
  
