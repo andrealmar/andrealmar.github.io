@@ -4,12 +4,32 @@
  <title>Andre Almar | random musings about software</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-06-08T14:18:13-03:00</updated>
+ <updated>2018-10-27T14:30:12-03:00</updated>
  <author>
    <name>Andre Almar</name>
    <uri>http://andrealmar.com</uri>
    <email>andre@y7mail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Operators and paradigm shift</title>
+   <link href="http://localhost:4000/operators-are-game-changing"/>
+   <id>http://localhost:4000/operators-are-game-changing</id>
+   <updated>2018-09-15T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;https://coreos.com/blog/introducing-operators.html https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/foo_fighters_generator.png&quot; alt=&quot;&quot; title=&quot;Foo FIghters - Generator (single)&quot; /&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;I believe we’re in the middle of a huge paradigm shift, in which Kubernetes and Operators will play a fundamental, new role.&lt;/li&gt; &lt;li&gt;Kubernetes is not only a container Orchestrator, it is an Application Platform&lt;/li&gt; &lt;li&gt;it’s not like infrastructure...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Cloud Native Infrastructure and why You should keep an eye on it</title>
+   <link href="http://localhost:4000/what-is-cloud-native-infrastructure"/>
+   <id>http://localhost:4000/what-is-cloud-native-infrastructure</id>
+   <updated>2018-08-28T00:00:00-03:00</updated>
+   <content type="html">&lt;p&gt;Unless you’ve been hidden in some cave I’m sure you have heard about Cloud Native Applications or Cloud Native Infrastructure. It has been one of the hottest topics on software nowadays. But what exactly is a Cloud Native Application? It’s just a hype? It’s something worth it to have a...</content>
+ </entry>
 
  
 
@@ -68,7 +88,7 @@
    <link href="http://localhost:4000/python-generators"/>
    <id>http://localhost:4000/python-generators</id>
    <updated>2016-03-02T00:00:00-03:00</updated>
-   <content type="html">&lt;blockquote&gt; &lt;p&gt;I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on &lt;br /&gt; Yeah can’t you hear my motored heart You’re the one that started it&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;&lt;img src=&quot;/img/foo_fighters_generator.png&quot; alt=&quot;&quot; title=&quot;Foo FIghters - Generator (single)&quot; /&gt;&lt;/p&gt; &lt;p&gt;Não…eu não vou escrever neste post sobre...</content>
+   <content type="html">&lt;blockquote&gt; &lt;p&gt;I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on &lt;br /&gt; Yeah can’t you hear my motored heart You’re the one that started it&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;&lt;img src=&quot;/img/foo_fighters_generator.png&quot; alt=&quot;&quot; title=&quot;Foo Fighters - Generator (single)&quot; /&gt;&lt;/p&gt; &lt;p&gt;Não…eu não vou escrever neste post sobre...</content>
  </entry>
 
  

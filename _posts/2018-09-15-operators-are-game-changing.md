@@ -1,7 +1,31 @@
-> I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on <br />
-Yeah can’t you hear my motored heart You’re the one that started it
+---
+title: Operators and paradigm shift
+description: Operators and paradigm shift
+header: Operators and paradigm shift
+---
 
-![](/img/foo_fighters_generator.png "Foo Fighters - Generator (single)")
+https://coreos.com/blog/introducing-operators.html
+https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04
+
+![](/img/foo_fighters_generator.png "Foo FIghters - Generator (single)")
+
+- I believe we’re in the middle of a huge paradigm shift, in which Kubernetes and Operators will play a fundamental, new role.
+- Kubernetes is not only a container Orchestrator, it is an Application Platform
+- it’s not like infrastructure automation, service orchestration and automated recovery are anything new. The main point, though, is they were in different domains. This is exactly the reason why Operators matter: in Kubernetes world, everything belongs together
+- Infrastructure == Kubernetes
+- Service == Your Service
+- Operational Intelligence == Operator
+- What really matters, though, is that as long as our infrastructure is provided with the needed warranties, we can start building on top of it.
+- Infrastructure Providers and Cloud Vendors are no longer competitors: they’re becoming customers/distributors.
+- In a world where everybody is enabled to distribute the same piece of software, the difference stands in how you do it.
+- The scenario today is: For software companies, building and maintaining cloud-native applications today is not a simple task - they must address significant complexities during the initial build and provide maintenance across siloed cloud footprints.
+- Using Operators you can write software that runs across any cloud where Kubernetes runs.
+- A Kubernetes application is an application that is both deployed on Kubernetes and managed using the Kubernetes APIs and kubectl tooling. Kubernetes Operators simplify application development for Kubernetes platforms by abstracting away complexities and coding human operational knowledge into applications, creating services that can function without human intervention.
+- You write a software, package and make it available within the Kubernetes platform without knowing the details of the Kubernetes APIs.
+- An Operator is a Kubernetes pattern that is extending the Kubernetes control plane with a custom Controller and Custom Resource Definitions that add additional operational knowledge of an application.
+- The etcd Operator extends Kubernetes to handle operations such as backups and resizing etcd clusters. These are the type of tasks that normally have humans following written playbooks to fix deployments when they get paged at 4AM. The CoreOS philosophy was to automate solutions to eliminate operational toil for the future. If you’ve resized the cluster once, you’re going to need to resize it a million times. Why not teach the computer to do it for you?
+- Eliminating Toil: https://landing.google.com/sre/book/chapters/eliminating-toil.html
+-
 
 Não…eu não vou escrever neste post sobre a ótima música do Foo Fighters, embora recomendo que você a escute =P. Estamos aqui para falar de uma função bastante legal na nossa linguagem de programação preferida: Os famosos Generators.
 
@@ -13,7 +37,7 @@ Simplificando mais ainda: Generators são uma forma simples de criarmos iterador
 
 Um exemplo bem simples. Abra o seu interpretador Python e digite a função abaixo:
 
-{% highlight python  %}
+{% highlight go  %}
 def generator():
     n = 1
     print("Essa  uma função Generator")

@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Python Generators</title>
-  <meta name="description" content="Andre Almar personal website powered by Jekyll.">
+	<title>Operators and paradigm shift</title>
+  <meta name="description" content="Operators and paradigm shift">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -123,16 +123,35 @@
 	  <main>
 
 	    <article id="post-page">
-	<h1>Python Generators</h1>
-	<time datetime="2016-03-02T00:00:00-03:00" class="by-line">02 Mar 2016</time>
+	<h1>Operators and paradigm shift</h1>
+	<time datetime="2018-09-15T00:00:00-03:00" class="by-line">15 Sep 2018</time>
 	<div class="content">
 
-		<blockquote>
-  <p>I’m the Generator, firing whenever you quit Yeah whatever it is, you go out and it’s on <br />
-Yeah can’t you hear my motored heart You’re the one that started it</p>
-</blockquote>
+		<p>https://coreos.com/blog/introducing-operators.html
+https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04</p>
 
-<p><img src="/img/foo_fighters_generator.png" alt="" title="Foo Fighters - Generator (single)" /></p>
+<p><img src="/img/foo_fighters_generator.png" alt="" title="Foo FIghters - Generator (single)" /></p>
+
+<ul>
+  <li>I believe we’re in the middle of a huge paradigm shift, in which Kubernetes and Operators will play a fundamental, new role.</li>
+  <li>Kubernetes is not only a container Orchestrator, it is an Application Platform</li>
+  <li>it’s not like infrastructure automation, service orchestration and automated recovery are anything new. The main point, though, is they were in different domains. This is exactly the reason why Operators matter: in Kubernetes world, everything belongs together</li>
+  <li>Infrastructure == Kubernetes</li>
+  <li>Service == Your Service</li>
+  <li>Operational Intelligence == Operator</li>
+  <li>What really matters, though, is that as long as our infrastructure is provided with the needed warranties, we can start building on top of it.</li>
+  <li>Infrastructure Providers and Cloud Vendors are no longer competitors: they’re becoming customers/distributors.</li>
+  <li>In a world where everybody is enabled to distribute the same piece of software, the difference stands in how you do it.</li>
+  <li>The scenario today is: For software companies, building and maintaining cloud-native applications today is not a simple task - they must address significant complexities during the initial build and provide maintenance across siloed cloud footprints.</li>
+  <li>Using Operators you can write software that runs across any cloud where Kubernetes runs.</li>
+  <li>A Kubernetes application is an application that is both deployed on Kubernetes and managed using the Kubernetes APIs and kubectl tooling. Kubernetes Operators simplify application development for Kubernetes platforms by abstracting away complexities and coding human operational knowledge into applications, creating services that can function without human intervention.</li>
+  <li>You write a software, package and make it available within the Kubernetes platform without knowing the details of the Kubernetes APIs.</li>
+  <li>An Operator is a Kubernetes pattern that is extending the Kubernetes control plane with a custom Controller and Custom Resource Definitions that add additional operational knowledge of an application.</li>
+  <li>The etcd Operator extends Kubernetes to handle operations such as backups and resizing etcd clusters. These are the type of tasks that normally have humans following written playbooks to fix deployments when they get paged at 4AM. The CoreOS philosophy was to automate solutions to eliminate operational toil for the future. If you’ve resized the cluster once, you’re going to need to resize it a million times. Why not teach the computer to do it for you?</li>
+  <li>
+    <h2 id="eliminating-toil-httpslandinggooglecomsrebookchapterseliminating-toilhtml">Eliminating Toil: https://landing.google.com/sre/book/chapters/eliminating-toil.html</h2>
+  </li>
+</ul>
 
 <p>Não…eu não vou escrever neste post sobre a ótima música do Foo Fighters, embora recomendo que você a escute =P. Estamos aqui para falar de uma função bastante legal na nossa linguagem de programação preferida: Os famosos Generators.</p>
 
@@ -144,16 +163,16 @@ Yeah can’t you hear my motored heart You’re the one that started it</p>
 
 <p>Um exemplo bem simples. Abra o seu interpretador Python e digite a função abaixo:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"Essa  uma função Generator"</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">n</span>
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="n">def</span><span class="x"> </span><span class="n">generator</span><span class="p">()</span><span class="o">:</span><span class="x">
+    </span><span class="n">n</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="m">1</span><span class="x">
+    </span><span class="nb">print</span><span class="p">(</span><span class="s">"Essa  uma função Generator"</span><span class="p">)</span><span class="x">
+    </span><span class="n">yield</span><span class="x"> </span><span class="n">n</span><span class="x">
 
-    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">yield</span> <span class="n">n</span>
+    </span><span class="n">n</span><span class="x"> </span><span class="o">+=</span><span class="x"> </span><span class="m">1</span><span class="x">
+    </span><span class="n">yield</span><span class="x"> </span><span class="n">n</span><span class="x">
 
-    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">yield</span> <span class="n">n</span></code></pre></figure>
+    </span><span class="n">n</span><span class="x"> </span><span class="o">+=</span><span class="x"> </span><span class="m">1</span><span class="x">
+    </span><span class="n">yield</span><span class="x"> </span><span class="n">n</span></code></pre></figure>
 
 <p>Vamos agora, executar a função no interpretador Python:</p>
 
